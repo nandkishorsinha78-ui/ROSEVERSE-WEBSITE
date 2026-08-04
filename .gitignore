@@ -1,0 +1,18 @@
+# OS junk
+.DS_Store
+Thumbs.db
+*.log
+
+# Git portable binaries
+mingit/
+mingit.zip
+
+# Dependencies & Build
+node_modules/
+.vercel/
+.env
+.env.local
+
+# Scratch & Temporary files
+scratch/
+.system_generated/

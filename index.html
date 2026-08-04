@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURA BLOOM • 300-Frame Botanical Kinetic Atelier</title>
+  <meta name="description" content="A 2026 luxury digital atelier showcasing 300-frame HTML5 canvas motion, interactive video playback, and real-time frame controls.">
+  
+  <!-- Modern Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Libre+Caslon+Text:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f8efea",
+                        "tertiary-fixed-dim": "#cdc6b8",
+                        "on-surface-variant": "#5a403c",
+                        "on-tertiary-container": "#b5aea1",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#2f2c22",
+                        "surface-container": "#f5ece7",
+                        "on-secondary-container": "#546a2e",
+                        "tertiary-fixed": "#e9e2d3",
+                        "on-tertiary-fixed-variant": "#4b463c",
+                        "secondary": "#50652a",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#e3beb8",
+                        "surface-container-low": "#fbf2ed",
+                        "primary": "#610000",
+                        "inverse-primary": "#ffb4a8",
+                        "inverse-surface": "#34302c",
+                        "on-secondary-fixed-variant": "#394d14",
+                        "on-primary-fixed": "#410000",
+                        "primary-container": "#8b0000",
+                        "surface-bright": "#fff8f5",
+                        "on-secondary-fixed": "#131f00",
+                        "on-surface": "#1e1b18",
+                        "secondary-fixed": "#d2eca2",
+                        "tertiary-container": "#464238",
+                        "primary-fixed": "#ffdad4",
+                        "surface-dim": "#e1d8d4",
+                        "on-secondary": "#ffffff",
+                        "outline": "#8e706b",
+                        "on-background": "#1e1b18",
+                        "surface-container-high": "#efe6e2",
+                        "on-tertiary-fixed": "#1e1b13",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#920703",
+                        "surface-tint": "#b52619",
+                        "primary-fixed-dim": "#ffb4a8",
+                        "surface-container-highest": "#e9e1dc",
+                        "on-error-container": "#93000a",
+                        "background": "#fff8f5",
+                        "secondary-fixed-dim": "#b6d088",
+                        "surface": "#fff8f5",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#ff907f",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e9e1dc",
+                        "secondary-container": "#cfe99f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "section-gap": "120px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "container-max": "1280px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Hanken Grotesk", "sans-serif"],
+                        "headline-md": ["Libre Caslon Text", "serif"],
+                        "body-md": ["Hanken Grotesk", "sans-serif"],
+                        "headline-lg": ["Libre Caslon Text", "serif"],
+                        "headline-lg-mobile": ["Libre Caslon Text", "serif"],
+                        "display-lg": ["Libre Caslon Text", "serif"],
+                        "label-sm": ["Hanken Grotesk", "sans-serif"],
+                        "body-lg": ["Hanken Grotesk", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+  <style>
+        .glass-effect {
+            background: rgba(255, 248, 245, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .bento-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.125rem;
+            border: 1px solid rgba(142, 112, 107, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-item:hover {
+            border-color: rgba(97, 0, 0, 0.5);
+        }
+        .bento-item img {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-item:hover img {
+            transform: scale(1.05);
+        }
+        .custom-input {
+            border: none;
+            border-bottom: 1px solid rgba(142, 112, 107, 0.15);
+            background: transparent;
+            border-radius: 0;
+            transition: border-color 0.3s ease;
+        }
+        .custom-input:focus {
+            outline: none;
+            box-shadow: none;
+            border-bottom-color: #50652a;
+        }
+    </style>
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- 1. Interactive Preloader Overlay -->
+  <div id="preloader" class="preloader">
+    <div class="preloader-backdrop"></div>
+    <div class="preloader-card">
+      <div class="preloader-ring">
+        <svg class="ring-svg" viewBox="0 0 100 100">
+          <circle class="ring-bg" cx="50" cy="50" r="44"></circle>
+          <circle id="ringProgress" class="ring-fill" cx="50" cy="50" r="44"></circle>
+        </svg>
+        <div class="ring-icon">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <path d="M32 6c-8 0-14 6-14 14 0 5.2 3.1 9.7 7.6 11.9C20.2 34.2 16 40.5 16 48c0 8.8 7.2 16 16 16s16-7.2 16-16c0-7.5-4.2-13.8-9.6-16.1C42.9 29.7 46 25.2 46 20c0-8-6-14-14-14zm0 6c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm0 24c5.5 0 10 4.5 10 10s-4.5 10-10 10-10-4.5-10-10 4.5-10 10-10z"/>
+          </svg>
+        </div>
+      </div>
+      
+      <h1 class="preloader-brand">AURA BLOOM</h1>
+      <p class="preloader-tagline">300-FRAME BOTANICAL KINETIC ATELIER</p>
+      
+      <div id="progressText" class="preloader-counter">0 / 300 Frames Loaded (0%)</div>
+    </div>
+  </div>
+
+  <!-- 2. Glass Navigation Bar -->
+  <header id="mainNavbar" class="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-brand">
+        <span class="brand-badge">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <path d="M32 6c-8 0-14 6-14 14 0 5.2 3.1 9.7 7.6 11.9C20.2 34.2 16 40.5 16 48c0 8.8 7.2 16 16 16s16-7.2 16-16c0-7.5-4.2-13.8-9.6-16.1C42.9 29.7 46 25.2 46 20c0-8-6-14-14-14zm0 6c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm0 24c5.5 0 10 4.5 10 10s-4.5 10-10 10-10-4.5-10-10 4.5-10 10-10z"/>
+          </svg>
+        </span>
+        <span class="brand-title">AURA BLOOM</span>
+      </a>
+
+      <button id="mobileNavToggle" class="nav-hamburger-btn" aria-label="Toggle Navigation Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <nav id="navMenu" class="nav-menu">
+        <a href="#hero" class="nav-item active">Overview</a>
+        <a href="#about" class="nav-item">About</a>
+        <a href="#kinetic-studio" class="nav-item">Kinetic Studio</a>
+        <a href="#collection" class="nav-item">Collection</a>
+        <a href="#masterclass" class="nav-item">Masterclass</a>
+        <a href="#boutique" class="nav-item">Boutique</a>
+        <a href="#process" class="nav-item">Process</a>
+        <a href="#products" class="nav-item">Pricing</a>
+        <a href="#faq" class="nav-item">FAQ</a>
+        <button id="navEyeComfortBtn" class="nav-btn ghost" title="Toggle High-Legibility Eye Comfort Mode">
+          <i class="fa-solid fa-eye"></i> Eye Comfort
+        </button>
+        <button id="openModalBtn" class="nav-btn ghost">
+          <i class="fa-solid fa-border-all"></i> Catalog (300)
+        </button>
+        <button id="openConsultationBtn" class="nav-btn outline-gold">
+          <i class="fa-solid fa-calendar-check"></i> Consultation
+        </button>
+        <button id="openAssistantNavBtn" class="nav-btn primary">
+          <i class="fa-solid fa-headset"></i> AI Assistant
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 3. Minimal Editorial Hero Section -->
+  <section id="hero" class="hero-section">
+    <div class="hero-glow"></div>
+    <div class="orb-3d-1"></div>
+    <div class="orb-3d-2"></div>
+    <div class="ambient-3d-grid"></div>
+    
+    <div class="hero-inner tilt-3d-target">
+      <div class="hero-tag">
+        <span class="pulse-dot"></span> 300-FRAME BOTANICAL MOTION SEQUENCE
+      </div>
+      
+      <h1 class="hero-heading">
+        NATURAL KINETICS <br>
+        <span class="gold-gradient">IN 300 FRAMES</span>
+      </h1>
+      
+      <p class="hero-subheading">
+        An immersive digital atelier capturing the metamorphosis of a velvet crimson rose in night monsoon with 60FPS canvas precision.
+      </p>
+
+      <div class="hero-actions">
+        <button id="heroPlayBtn" class="action-btn glow-btn">
+          <i class="fa-solid fa-circle-play"></i>
+          <span>Launch 60FPS Video</span>
+        </button>
+        <a href="#kinetic-studio" class="action-btn border-btn">
+          <i class="fa-solid fa-sliders"></i>
+          <span>Interactive Studio</span>
+        </a>
+      </div>
+
+      <div class="hero-scroll-cue">
+        <div class="cue-line"></div>
+        <span>SCROLL TO UNCHAIN MOTION</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Premium Highlights Bar -->
+  <section id="highlights" class="highlights-ribbon-section">
+    <div class="ribbon-glow-backdrop"></div>
+    <div class="ribbon-container">
+      
+      <div class="highlight-item-card">
+        <div class="highlight-icon">
+          <i class="fa-solid fa-film"></i>
+        </div>
+        <div class="highlight-info">
+          <span class="highlight-val">300 HD FRAMES</span>
+          <span class="highlight-desc">High-Density Motion Sequence</span>
+        </div>
+      </div>
+
+      <div class="highlight-divider"></div>
+
+      <div class="highlight-item-card">
+        <div class="highlight-icon">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <div class="highlight-info">
+          <span class="highlight-val">60 FPS BUFFER</span>
+          <span class="highlight-desc">Zero-Lag Canvas Rendering</span>
+        </div>
+      </div>
+
+      <div class="highlight-divider"></div>
+
+      <div class="highlight-item-card">
+        <div class="highlight-icon">
+          <i class="fa-solid fa-droplet"></i>
+        </div>
+        <div class="highlight-info">
+          <span class="highlight-val">DEW OPTICS</span>
+          <span class="highlight-desc">Crystal Rain Reflection</span>
+        </div>
+      </div>
+
+      <div class="highlight-divider"></div>
+
+      <div class="highlight-item-card">
+        <div class="highlight-icon">
+          <i class="fa-solid fa-sliders"></i>
+        </div>
+        <div class="highlight-info">
+          <span class="highlight-val">FRAME SCRUBBER</span>
+          <span class="highlight-desc">Precision Motion Control</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. NEW: About Atelier & Brand Philosophy Section -->
+  <section id="about" class="about-section">
+    <div class="section-container">
+      <div class="about-grid">
+        
+        <div class="about-content">
+          <span class="section-tag">BOTANICAL ATELIER</span>
+          <h2>Crafting Motion Frame by Frame</h2>
+          <p>AURA BLOOM bridges digital art and organic botanical physics. By digitizing 300 sequential micro-photographs into a high-performance HTML5 Canvas engine, we turn static photography into fluid interactive motion.</p>
+
+          <div class="about-features-list">
+            <div class="about-feature-item">
+              <div class="feature-bullet"><i class="fa-solid fa-check"></i></div>
+              <div>
+                <h4>Sub-Frame Step Syncing</h4>
+                <p>Ensures scrolling steps smoothly through every single integer frame (1 to 300) without skipping.</p>
+              </div>
+            </div>
+
+            <div class="about-feature-item">
+              <div class="feature-bullet"><i class="fa-solid fa-check"></i></div>
+              <div>
+                <h4>Spatial Audio Feedback</h4>
+                <p>Real-time audio ticks and drone resonance synthesized in response to blooming velocity.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-metrics-card">
+          <div class="metrics-grid">
+            <div class="metric-box">
+              <span class="metric-number">300</span>
+              <span class="metric-label">RAW HD Frames</span>
+            </div>
+
+            <div class="metric-box">
+              <span class="metric-number">60</span>
+              <span class="metric-label">FPS Hardware Buffer</span>
+            </div>
+
+            <div class="metric-box">
+              <span class="metric-number">4K</span>
+              <span class="metric-label">Retina Pixel Ratio</span>
+            </div>
+
+            <div class="metric-box">
+              <span class="metric-number">0ms</span>
+              <span class="metric-label">Input Latency</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Main 300-Frame Kinetic Studio Viewport -->
+  <section id="kinetic-studio" class="studio-section">
+    <div class="sticky-frame-viewport">
+      
+      <!-- Primary HTML5 Canvas Render Surface -->
+      <canvas id="roseCanvas" class="canvas-render-surface"></canvas>
+      
+      <!-- Floating Bokeh Particle Layer -->
+      <canvas id="particleCanvas" class="canvas-particle-surface"></canvas>
+
+      <!-- Scroll Animation Header Overlay (Fades out at 30% scroll progress) -->
+      <div id="studioHeadingOverlay" class="studio-heading-overlay">
+        <h1 class="studio-heading-title">ROSEVERSE</h1>
+        <p class="studio-heading-subtitle">THE LOVE OF INDIANS</p>
+      </div>
+      
+      <!-- Dynamic Color Grading Overlay -->
+      <div id="filterOverlay" class="canvas-grading-overlay"></div>
+
+      <!-- Editorial Scroll Milestone Cards -->
+      <div class="milestone-container">
+        
+        <!-- Milestone 01 -->
+        <article id="cardPhase1" class="milestone-card" data-phase="1">
+          <div class="card-header">
+            <span class="phase-badge"><i class="fa-solid fa-moon"></i> PHASE 01 &bull; FRAMES 001–075</span>
+            <span class="phase-count">01 / 04</span>
+          </div>
+          <h3>Midnight Genesis</h3>
+          <p>Under ambient night mist, velvet crimson petals begin their silent unfolding, revealing delicate organic curves.</p>
+          <div class="card-footer">
+            <span class="footer-stat">300 DPI RENDER</span>
+            <span class="footer-stat">NIGHT MONSOON</span>
+          </div>
+        </article>
+
+        <!-- Milestone 02 -->
+        <article id="cardPhase2" class="milestone-card" data-phase="2">
+          <div class="card-header">
+            <span class="phase-badge"><i class="fa-solid fa-droplet"></i> PHASE 02 &bull; FRAMES 076–150</span>
+            <span class="phase-count">02 / 04</span>
+          </div>
+          <h3>Rain & Dew Optics</h3>
+          <p>Microscopic rain droplets sparkle across the petal surface, reflecting ambient light with crystal clarity.</p>
+          <div class="card-footer">
+            <span class="footer-stat">MACRO REFLECTION</span>
+            <span class="footer-stat">SILK TEXTURE</span>
+          </div>
+        </article>
+
+        <!-- Milestone 03 -->
+        <article id="cardPhase3" class="milestone-card" data-phase="3">
+          <div class="card-header">
+            <span class="phase-badge"><i class="fa-solid fa-sun"></i> PHASE 03 &bull; FRAMES 151–225</span>
+            <span class="phase-count">03 / 04</span>
+          </div>
+          <h3>Burgundy Radiance</h3>
+          <p>Unfolding layer by layer into complete grandeur, displaying flawless organic symmetry and deep ruby gradients.</p>
+          <div class="card-footer">
+            <span class="footer-stat">FULL GEOMETRY</span>
+            <span class="footer-stat">DEEP BURGUNDY</span>
+          </div>
+        </article>
+
+        <!-- Milestone 04 -->
+        <article id="cardPhase4" class="milestone-card" data-phase="4">
+          <div class="card-header">
+            <span class="phase-badge"><i class="fa-solid fa-crown"></i> PHASE 04 &bull; FRAMES 226–300</span>
+            <span class="phase-count">04 / 04</span>
+          </div>
+          <h3>Eternal Symmetry</h3>
+          <p>A 300-frame masterwork of continuous high-definition motion, capturing every subtle petal curve in full clarity.</p>
+          <div class="card-footer">
+            <span class="footer-stat">300 / 300 COMPLETE</span>
+            <span class="footer-stat">60 FPS STEREO</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Floating Atelier Control Bar HUD -->
+      <div class="atelier-hud">
+        <div class="hud-group left">
+          <button id="playPauseBtn" class="hud-circle-btn primary" title="Play / Pause Motion">
+            <i class="fa-solid fa-play"></i>
+          </button>
+          
+          <button id="stepPrevBtn" class="hud-circle-btn" title="Previous Frame (-1)">
+            <i class="fa-solid fa-backward-step"></i>
+          </button>
+
+          <button id="stepNextBtn" class="hud-circle-btn" title="Next Frame (+1)">
+            <i class="fa-solid fa-forward-step"></i>
+          </button>
+
+          <button id="audioToggleBtn" class="hud-circle-btn" title="Toggle Sound Synth">
+            <i class="fa-solid fa-volume-xmark"></i>
+          </button>
+
+          <div class="hud-frame-badge">
+            <span id="currentFrameDisplay">001</span> <span class="badge-total">/ 300</span>
+            <span id="fpsBadge" class="badge-fps">60 FPS</span>
+          </div>
+        </div>
+
+        <div class="hud-group center">
+          <div class="scrubber-wrapper">
+            <input type="range" id="frameScrubber" min="1" max="300" value="1" step="1" class="studio-slider">
+          </div>
+        </div>
+
+        <div class="hud-group right">
+          <div class="preset-pill-group">
+            <button class="preset-pill" data-frame="1">0%</button>
+            <button class="preset-pill" data-frame="75">25%</button>
+            <button class="preset-pill" data-frame="150">50%</button>
+            <button class="preset-pill" data-frame="225">75%</button>
+            <button class="preset-pill" data-frame="300">100%</button>
+          </div>
+
+          <select id="speedSelect" class="hud-dropdown" title="Playback Speed">
+            <option value="0.5">0.5x Speed</option>
+            <option value="1.0" selected>1.0x Speed (30 FPS)</option>
+            <option value="1.5">1.5x Speed (45 FPS)</option>
+            <option value="2.0">2.0x Speed (60 FPS)</option>
+          </select>
+
+          <select id="resolutionSelect" class="hud-dropdown" title="Screen Resolution & Vision Mode">
+            <option value="90" selected>🔍 90% Screen Resolution</option>
+            <option value="100">🖥️ 100% Standard Scale</option>
+            <option value="comfort">👁️ Eye Comfort (125%)</option>
+            <option value="1080p">📺 1080p Full HD</option>
+            <option value="4k">✨ 4K Ultra-HD</option>
+          </select>
+
+          <select id="filterSelect" class="hud-dropdown" title="Color Grading">
+            <option value="none">Original</option>
+            <option value="glow">Velvet Glow</option>
+            <option value="emerald">Emerald Rain</option>
+            <option value="noir">Obsidian Noir</option>
+            <option value="warm">Golden Twilight</option>
+          </select>
+
+          <button id="aspectToggleBtn" class="hud-circle-btn" title="Toggle Mode (Cover / Contain)">
+            <i class="fa-solid fa-expand"></i>
+          </button>
+
+          <button id="fullscreenBtn" class="hud-circle-btn" title="Fullscreen Mode">
+            <i class="fa-solid fa-compress-arrows-alt"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ROSEVERSE BOUTIQUE & MASTERCLASS SECTIONS (Imported from code.html)
+       ========================================================================== -->
+
+  <!-- Gallery (The Collection) -->
+  <section class="py-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-on-background relative z-10" id="collection">
+    <div class="text-center mb-16">
+      <span class="font-label-lg text-label-lg text-secondary tracking-widest uppercase mb-2 block">CURATED GALLERY</span>
+      <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background mb-4">The Collection</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant max-w-xl mx-auto">A curated gallery of our finest varieties, selected for their extraordinary color, fragrance, and petal count.</p>
+    </div>
+    <div class="bento-grid">
+      <div class="bento-item h-[400px]">
+        <img alt="Detailed photograph of a vibrant red rose" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvq7KsE4NPQp29mBDUYtNBr-uvmEu-gxPM49LX_1zusIXDc4f4CCdkATiTtZCFO5O8fjYyqS3d7AO08ujfErYEv4QekkFBhpRKfs41rNvrS44A02-lL84yN4-4CfF-FrdG0yDDoNmcsCBVOpx1PQH3l3cZJxL93zWu-0Y1tSrN3DoMyinm0Zewm2B6F648GHmqcTGr9iNdnMPi_rrCVOrpVj6hxidJQy9wsrvGtpBAhTfnufcgMbZePRAF94_bCQyv">
+        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-tertiary/90 to-transparent">
+          <h3 class="font-headline-md text-headline-md text-on-primary mb-1">Crimson Velvet</h3>
+          <span class="inline-block px-3 py-1 bg-secondary-container text-on-secondary-container font-label-sm text-label-sm rounded-full">Fragrant</span>
+        </div>
+      </div>
+      <div class="bento-item h-[400px]">
+        <img class="w-full h-full object-cover" data-alt="A close-up, high-fashion photograph of a delicate pale pink rose against a clean, minimalist white background. Soft, diffused lighting highlights the velvety texture of the petals. The image embodies a light-mode, premium editorial aesthetic with vast negative space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAO7IYm-mu_czkkZNvfTVWGqGiQ4i03n3B4N2JG2OgKs1kC2wfYbYxwpScpXif3CL2KrhXrIcYgspbb4GtWAXk1vjLhIfIJCTZXTSdJznxYwWRx2Q8TG1IKZSit6iQuBEj4Jm8-YGylEvPrJr5WjfjhUGArMPbZDDUPFPwy7fatz3sGyxlzgOKm56z83Yf_pbT_0k2t41p6yJGQB9PxDJsLGvuXb7JQ_eRZ6NNpTpPdPOuW3JdZ-fE">
+        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-tertiary/90 to-transparent">
+          <h3 class="font-headline-md text-headline-md text-on-primary mb-1">Blush Sonata</h3>
+          <span class="inline-block px-3 py-1 bg-secondary-container text-on-secondary-container font-label-sm text-label-sm rounded-full">Seasonal</span>
+        </div>
+      </div>
+      <div class="bento-item h-[400px] md:col-span-2">
+        <img class="w-full h-full object-cover" data-alt="A wide, landscape photograph of an elegant floral arrangement featuring pristine white and deep red roses in a minimalist ceramic vase. Set in a bright, modern studio space with soft natural light streaming in from the side. High key lighting, editorial aesthetic, sophisticated mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJSxnetdSa3De_5nVwwgcxMcDpdq5UkgBtS-0Qo5t0VphMyzIxM-GAeZNCmaQuvPrkIITJKkpG6miCc0b1LUBEYgJbZRCNfQ1yIFOzQ3e4vZKbDeErRdjGScrrDZ03TEnhhx3w8zG0eKQOeUZ352uXEJWtp6nA8vVQhz8zHV0wcldaBf5f4NG1OPKJ9cBSWzFTBPslEsJWSzZRCoNKpXoox69ACbByBNcQeaKqrirO3qHURBvPnHM">
+        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-tertiary/90 to-transparent">
+          <h3 class="font-headline-md text-headline-md text-on-primary mb-1">The Atelier Arrangement</h3>
+          <p class="font-body-md text-body-md text-inverse-on-surface/80">Curated perfection for grand spaces.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Masterclass Section -->
+  <section class="bg-surface-container-low py-16 text-on-background relative z-10" id="masterclass">
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <div class="order-2 md:order-1">
+        <img class="w-full h-[500px] object-cover border border-outline-variant/20 rounded-lg shadow-xl" data-alt="A detail shot of a pair of vintage, dark metal pruning shears resting beside fresh rose stems on a clean, light cream surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZc3Gnn5nPRaMefQrb4JoT_SQHoFb0pWXHX7kfP98Yj6DKynPdgEmR4Cc9J2VAp7Eq8W3flhK1CR3l-mj7FVSThTHHBpNpSItkABYIm4vIKlWp7Vt3rV_5Q8XZ-o7QKLmci78xSiJdYMg-YvkMo2Y8mVYP2JduXSZWl8voMDHbAnht7GN1Y2UazypAUTuXwCUuXzFzIZMqyWTB8h5xqtp6pyQEu-4C5Q7YmUoflTWZoUcyqGfeLmQ">
+      </div>
+      <div class="order-1 md:order-2">
+        <span class="font-label-lg text-label-lg text-secondary tracking-widest uppercase mb-4 block">Masterclass</span>
+        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background mb-6">The Art of the Bloom</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mb-6">Elevate your understanding of floral care. Learn the delicate techniques of pruning, hydration, and placement to ensure your roses maintain their breathtaking presence for days to come.</p>
+        <ul class="space-y-4 mb-10">
+          <li class="flex items-start gap-4 pb-4 border-b border-outline-variant/15">
+            <span class="material-symbols-outlined text-primary mt-1" style="font-variation-settings: 'FILL' 0;">water_drop</span>
+            <div>
+              <h4 class="font-label-lg text-label-lg text-on-background">Hydration Techniques</h4>
+              <p class="font-body-md text-body-md text-on-surface-variant">The secret to structural longevity.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-4 pb-4 border-b border-outline-variant/15">
+            <span class="material-symbols-outlined text-primary mt-1" style="font-variation-settings: 'FILL' 0;">cut</span>
+            <div>
+              <h4 class="font-label-lg text-label-lg text-on-background">Precision Pruning</h4>
+              <p class="font-body-md text-body-md text-on-surface-variant">Encouraging optimal bloom unfurling.</p>
+            </div>
+          </li>
+        </ul>
+        <button class="inline-flex items-center gap-2 font-label-lg text-label-lg text-primary hover:text-primary-container transition-colors duration-300 group select-tier-btn" data-tier="Custom Atelier Engineering ($2,499+)">
+          Join the Masterclass 
+          <span class="material-symbols-outlined transform group-hover:translate-x-1 transition-transform" style="font-variation-settings: 'FILL' 0;">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Boutique Shop -->
+  <section class="py-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-on-background relative z-10" id="boutique">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+      <div>
+        <span class="font-label-lg text-label-lg text-secondary tracking-widest uppercase mb-2 block">BOUTIQUE STORE</span>
+        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background mb-4">The Boutique</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-md">Curated arrangements for delivery, designed with an uncompromising eye for proportion and color.</p>
+      </div>
+      <a class="font-label-lg text-label-lg text-primary border-b border-primary pb-1 hover:border-transparent transition-all duration-300" href="#products">View All Options</a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Product Card 1 -->
+      <div class="group cursor-pointer">
+        <div class="relative overflow-hidden mb-6 border border-outline-variant/10 h-[450px] bg-surface-container-lowest rounded-lg shadow-md">
+          <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A minimalist photograph of a single, perfect dark red rose in a slender glass vase." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChohpAeODPC1qPPeQyyjePzQSz4Rd7KFT-7rbT-Yj4dT3W0RUeT-pvRcTqPvGZfhAt6I-d5ACScTbwj3UnIzlQKRfrdYXSi07w6Ljq_qIw9CI2nD81h5j4m7Kv2qNx3RpO_4W2v14lvJZ6L5eUv6outaOemAHbPWmDcKHf0n_cZf_Jeu1sxyfvLc0q9LroPB-HYgGOCjFPeE4AR7Ti6igeTbYT0hD6YytrLspKQ6ZFIsaSbg9JEi0">
+          <div class="absolute inset-0 bg-inverse-surface/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <button class="bg-primary text-on-primary font-label-lg text-label-lg px-6 py-3 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 rounded select-tier-btn" data-tier="Essential Botanical Kit ($299)">Add to Cart</button>
+          </div>
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-background mb-2">The Solitaire</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-3">Single stem Crimson Velvet</p>
+        <p class="font-label-lg text-label-lg text-primary">$45</p>
+      </div>
+      <!-- Product Card 2 -->
+      <div class="group cursor-pointer">
+        <div class="relative overflow-hidden mb-6 border border-outline-variant/10 h-[450px] bg-surface-container-lowest rounded-lg shadow-md">
+          <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A beautifully composed cluster of soft peach and white roses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7FaD3oVxLxedKzuNvVOYioFb1w_vDeDloRmWKZxSeR2_0NtFv_GdKH9h8x4sl4FZVd4QKMWEqPFTLmt5r2CAMIJ4iACMXt35hTquBwg56jIidLVDDq9OCFdflVf8E95owDGpGeRLhrIJo553o7N8WDRc6r1p3OlxNmZ9fMjWbmsPuggBWZyxY2bDtf8_90IbXHef6p8yxDGofb0wXxvX-tlDMI2kjkKY7g_xBnqNfSnA5PxIu6U0">
+          <div class="absolute inset-0 bg-inverse-surface/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <button class="bg-primary text-on-primary font-label-lg text-label-lg px-6 py-3 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 rounded select-tier-btn" data-tier="Essential Botanical Kit ($299)">Add to Cart</button>
+          </div>
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-background mb-2">Morning Haze</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-3">Half-dozen Blush Sonata</p>
+        <p class="font-label-lg text-label-lg text-primary">$120</p>
+      </div>
+      <!-- Product Card 3 -->
+      <div class="group cursor-pointer">
+        <div class="relative overflow-hidden mb-6 border border-outline-variant/10 h-[450px] bg-surface-container-lowest rounded-lg shadow-md">
+          <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A grand, opulent bouquet of mixed deep red, burgundy, and dark pink roses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnHzu313ePW7xGSVe1jlzNhATnuHsQC7Vysnh7krS4SvVsZSsRc5e97usnJHEfgy0EHOA4_OyQgc27yS0kCa-5ngS3kWHV90q9auv9oIsrb3jzbee-ac-zV9FKJc-4EutOx0_7DPjnPSS823ITRoxglFF_b5yrfNBKniSUxUBfzRMlkLNzbWfPN6REvD-NtgHYvsqMnueeFbvvfiY61taAkmkvMGO30CfifX_8WOlUX4WLwahqIGQ">
+          <div class="absolute inset-0 bg-inverse-surface/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <button class="bg-primary text-on-primary font-label-lg text-label-lg px-6 py-3 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 rounded select-tier-btn" data-tier="Atelier Commercial License ($799)">Add to Cart</button>
+          </div>
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-background mb-2">Midnight Opera</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-3">Two dozen mixed heritage</p>
+        <p class="font-label-lg text-label-lg text-primary">$285</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="bg-surface-bright py-16 border-t border-outline-variant/10 text-on-background relative z-10" id="newsletter">
+    <div class="max-w-3xl mx-auto px-margin-mobile text-center">
+      <span class="material-symbols-outlined text-primary text-4xl mb-6" style="font-variation-settings: 'FILL' 0;">local_florist</span>
+      <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background mb-4">Floral Inspirations</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant mb-10">Subscribe to receive gentle notes on seasonal arrivals, exclusive masterclasses, and the art of living with flowers.</p>
+      <form id="boutiqueNewsletterForm" class="flex flex-col md:flex-row gap-4 max-w-lg mx-auto">
+        <div class="relative flex-1">
+          <label class="font-label-sm text-label-sm text-on-surface-variant absolute -top-5 left-0" for="boutiqueEmail">Email Address</label>
+          <input class="custom-input w-full py-2 font-body-md text-on-background placeholder:text-outline-variant" id="boutiqueEmail" placeholder="your@email.com" required type="email">
+        </div>
+        <button class="bg-primary text-on-primary font-label-lg text-label-lg px-8 py-2 hover:bg-primary-container transition-colors duration-300 self-end mt-4 md:mt-0 rounded" type="submit">Subscribe</button>
+      </form>
+      <div id="boutiqueNewsMsg" class="mt-4 text-sm text-emerald-600 font-semibold"></div>
+    </div>
+  </section>
+
+  <!-- Roseverse Footer -->
+  <footer class="bg-surface-container-highest py-16 border-t border-outline-variant/10 text-on-background relative z-10" id="roseverse-footer">
+    <div class="flex flex-col items-center gap-8 px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto text-center">
+      <a class="font-display-lg text-headline-md text-primary" href="#hero">Roseverse</a>
+      <div class="flex flex-wrap justify-center gap-6 md:gap-12">
+        <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#hero">Privacy Policy</a>
+        <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#hero">Terms of Service</a>
+        <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#hero">Shipping & Returns</a>
+        <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#hero">Contact Us</a>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant mt-4">© 2026 Roseverse Atelier. Cultivating elegance through every petal.</p>
+    </div>
+  </footer>
+
+  <!-- 7. NEW: Capture Process & Architecture Section -->
+  <section id="process" class="process-section">
+    <div class="section-container">
+      <div class="section-title-box">
+        <span class="section-tag">ENGINEERING PIPELINE</span>
+        <h2>How the 300-Frame Engine Works</h2>
+        <p>From macro camera sensor to hardware-accelerated 60FPS browser canvas.</p>
+      </div>
+
+      <div class="process-grid">
+        <div class="process-card">
+          <div class="process-step-num">01</div>
+          <h3>Macro Sensor Capture</h3>
+          <p>300 continuous RAW photographs captured at sub-millimeter focal depth during night monsoon rainfall.</p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-step-num">02</div>
+          <h3>Chromatic Color Grading</h3>
+          <p>Digital colorist mapping velvet crimson tones and crystal dew contrast for HDR web rendering.</p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-step-num">03</div>
+          <h3>Canvas Step LERP</h3>
+          <p>Sub-frame mathematical interpolation delivering 60FPS smooth scroll synchronization without skipping.</p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-step-num">04</div>
+          <h3>Spatial Audio Drone</h3>
+          <p>Web Audio API oscillator synthesizing harmonic resonance matching the flower's blooming speed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7.5 Products, Pricing & Services Section -->
+  <section id="products" class="products-section">
+    <div class="section-container">
+      <div class="section-title-box">
+        <span class="section-tag">PRODUCTS & SOLUTIONS</span>
+        <h2>Explore Our Atelier Offerings</h2>
+        <p>Transparent pricing, flexible licensing, and bespoke kinetic animation engineering for luxury digital experiences.</p>
+      </div>
+
+      <div class="pricing-cards-grid">
+        
+        <!-- Tier 1 -->
+        <div class="pricing-card">
+          <div class="pricing-badge">DEVELOPER KIT</div>
+          <h3 class="pricing-title">Essential Botanical Kit</h3>
+          <p class="pricing-desc">Complete 300 HD frame sequence pre-compiled for fast web canvas embedding.</p>
+          <div class="pricing-price">
+            <span class="currency">$</span><span class="amount">299</span>
+            <span class="period">/ one-time</span>
+          </div>
+          <ul class="pricing-features">
+            <li><i class="fa-solid fa-check feature-check"></i> 300 1080p WebP/JPG HD Frames</li>
+            <li><i class="fa-solid fa-check feature-check"></i> Raw HTML5 Canvas LERP Engine</li>
+            <li><i class="fa-solid fa-check feature-check"></i> Single Commercial Project License</li>
+            <li><i class="fa-solid fa-check feature-check"></i> Documentation & Integration Guides</li>
+            <li><i class="fa-solid fa-check feature-check"></i> Web Audio Synth Module Included</li>
+          </ul>
+          <button class="pricing-action-btn select-tier-btn" data-tier="Essential Botanical Kit ($299)">
+            <span>Select Essential Kit</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Tier 2 (Popular) -->
+        <div class="pricing-card featured">
+          <div class="pricing-badge popular">MOST POPULAR</div>
+          <h3 class="pricing-title">Atelier Commercial License</h3>
+          <p class="pricing-desc">Full 4K resolution raw sequence, multi-domain license, and dedicated technical integration support.</p>
+          <div class="pricing-price">
+            <span class="currency">$</span><span class="amount">799</span>
+            <span class="period">/ one-time</span>
+          </div>
+          <ul class="pricing-features">
+            <li><i class="fa-solid fa-check feature-check"></i> 300 4K Ultra-HD Raw Frame Sequence</li>
+            <li><i class="fa-solid fa-check feature-check"></i> Multi-Domain Unlimited Commercial License</li>
+            <li><i class="fa-solid fa-check feature-check"></i> Dual Canvas + WebGL Particle Engine</li>
+            <li><i class="fa-solid fa-check feature-check"></i> Custom Filter & Shader Presets</li>
+            <li><i class="fa-solid fa-check feature-check"></i> Priority 1-on-1 Engineer Integration Support</li>
+          </ul>
+          <button class="pricing-action-btn select-tier-btn primary-glow" data-tier="Atelier Commercial License ($799)">
+            <span>Acquire Commercial License</span>
+            <i class="fa-solid fa-sparkles"></i>
+          </button>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="pricing-card">
+          <div class="pricing-badge custom">BESPOKE</div>
+          <h3 class="pricing-title">Custom Atelier Engineering</h3>
+          <p class="pricing-desc">Bespoke 300+ frame macro studio shoot, custom WebGL physics, and tailor-made brand kinetic experiences.</p>
+          <div class="pricing-price">
+            <span class="currency">$</span><span class="amount">2,499</span>
+            <span class="period">+ / custom project</span>
+          </div>
+          <ul class="pricing-features">
+            <li><i class="fa-solid fa-check feature-check"></i> Custom 300-Frame Macro Botanical Shoot</li>
+            <li><i class="fa-solid fa-check feature-check"></i> Tailored Shader & Audio Design</li>
+            <li><i class="fa-solid fa-check feature-check"></i> Full Exclusive Enterprise Ownership</li>
+            <li><i class="fa-solid fa-check feature-check"></i> VIP Consultation & Strategy Session</li>
+            <li><i class="fa-solid fa-check feature-check"></i> Performance Optimization Guarantee (60FPS)</li>
+          </ul>
+          <button class="pricing-action-btn select-tier-btn outline" data-tier="Custom Atelier Engineering ($2,499+)">
+            <span>Book Consultation</span>
+            <i class="fa-solid fa-calendar-check"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Architecture Specs Section -->
+  <section id="specs" class="specs-section">
+    <div class="specs-container">
+      <div class="specs-header">
+        <span class="specs-tag">ATELIER ENGINE</span>
+        <h2>ROSEVERSE Platform Architecture</h2>
+        <p>Built with zero external framework overhead, raw GPU hardware acceleration, and spatial kinetic audio synthesis.</p>
+      </div>
+
+      <div class="specs-grid">
+        <div class="spec-card">
+          <div class="spec-icon"><i class="fa-solid fa-film"></i></div>
+          <h3>300 HD Frame Memory Cache</h3>
+          <p>All 300 high-definition micro-photographs pre-buffered in browser RAM upon load for zero-latency 60FPS frame scrubbing.</p>
+        </div>
+
+        <div class="spec-card">
+          <div class="spec-icon"><i class="fa-solid fa-gauge-high"></i></div>
+          <h3>Sub-Frame Linear Step LERP</h3>
+          <p>Mathematical step interpolation algorithm ensuring continuous rendering from Frame 1 to 300 without stutter or black buffer gaps.</p>
+        </div>
+
+        <div class="spec-card">
+          <div class="spec-icon"><i class="fa-solid fa-cube"></i></div>
+          <h3>3D Perspective Cosmos</h3>
+          <p>Interactive 3D particle depth layer featuring Z-axis camera space projection and real-time mouse magnetic parallax.</p>
+        </div>
+
+        <div class="spec-card">
+          <div class="spec-icon"><i class="fa-solid fa-wave-square"></i></div>
+          <h3>Spatial Audio Synthesizer</h3>
+          <p>Native Web Audio API harmonic oscillator generating ambient drone tones and haptic scroll ticks tuned to blooming velocity.</p>
+        </div>
+
+        <div class="spec-card">
+          <div class="spec-icon"><i class="fa-solid fa-headset"></i></div>
+          <h3>AI Sales & Business Assistant</h3>
+          <p>Built-in ethical AI assistant providing transparent solutions, instant consultation booking, and project recommendation.</p>
+        </div>
+
+        <div class="spec-card">
+          <div class="spec-icon"><i class="fa-solid fa-eye"></i></div>
+          <h3>Multi-Scale Vision Accessibility</h3>
+          <p>Dynamic 90%, 100%, and 125% Eye Comfort resolution scaling ensuring high-legibility text on any display size.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. NEW: Interactive FAQ Accordion Section -->
+  <section id="faq" class="faq-section">
+    <div class="section-container">
+      <div class="section-title-box">
+        <span class="section-tag">COMMON QUESTIONS</span>
+        <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know about our 300-frame web canvas animation engine.</p>
+      </div>
+
+      <div class="faq-accordion-list">
+        
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How does the 300-frame scroll animation work without lag?</span>
+            <i class="fa-solid fa-chevron-down faq-icon"></i>
+          </button>
+          <div class="faq-answer">
+            <p>All 300 high-definition frames are pre-buffered directly in browser RAM upon initial page load. Our HTML5 Canvas 2D engine utilizes linear step interpolation to render frames in GPU-accelerated requestAnimationFrame cycles.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Can I control playback speed and inspect individual frames?</span>
+            <i class="fa-solid fa-chevron-down faq-icon"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Yes! You can toggle between 0.5x, 1.0x, 1.5x, and 2.0x playback speeds, use step buttons (`-1` / `+1`), or open the 300-Frame Inspector Grid to inspect any frame thumbnail.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Is the audio track generated dynamically?</span>
+            <i class="fa-solid fa-chevron-down faq-icon"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, we use the browser's native Web Audio API to synthesize a relaxing harmonic drone tone and mechanical scroll ticks synchronized to blooming velocity.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. NEW: Premium Newsletter & Call-To-Action Banner -->
+  <section class="cta-banner-section">
+    <div class="cta-banner-card">
+      <div class="cta-glow"></div>
+      <div class="cta-inner">
+        <h2>Experience the Future of Web Animation</h2>
+        <p>Subscribe to receive technical breakdowns on botanical kinetic design and HTML5 canvas engines.</p>
+        
+        <form id="subscribeForm" class="cta-form">
+          <input type="email" id="subscriberEmail" placeholder="Enter your professional email..." required class="cta-input">
+          <button type="submit" class="action-btn glow-btn">
+            <span>Join Atelier Circle</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </form>
+        <div id="ctaMsg" class="cta-response-msg"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. 300-Frame Catalog Modal -->
+  <div id="catalogModal" class="modal-backdrop">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <div>
+          <h3><i class="fa-solid fa-images"></i> 300-Frame Motion Catalog</h3>
+          <p>Click any thumbnail to inspect that frame in the studio player.</p>
+        </div>
+        <button id="closeModalBtn" class="modal-close">&times;</button>
+      </div>
+      
+      <div id="modalGrid" class="modal-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 12. Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span class="brand-badge">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <path d="M32 6c-8 0-14 6-14 14 0 5.2 3.1 9.7 7.6 11.9C20.2 34.2 16 40.5 16 48c0 8.8 7.2 16 16 16s16-7.2 16-16c0-7.5-4.2-13.8-9.6-16.1C42.9 29.7 46 25.2 46 20c0-8-6-14-14-14zm0 6c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm0 24c5.5 0 10 4.5 10 10s-4.5 10-10 10-10-4.5-10-10 4.5-10 10-10z"/>
+          </svg>
+        </span>
+        <span class="brand-title">AURA BLOOM</span>
+      </div>
+      <p>&copy; 2026 AURA BLOOM Atelier. Powered by 300-Frame HTML5 Canvas Engine.</p>
+      <div class="footer-links">
+        <a href="#hero">Top</a>
+        <a href="#about">About</a>
+        <a href="#kinetic-studio">Studio</a>
+        <a href="#process">Process</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 13. Consultation Booking Modal -->
+  <div id="consultationModal" class="modal-backdrop">
+    <div class="modal-panel consultation-panel">
+      <div class="modal-head">
+        <div>
+          <h3><i class="fa-solid fa-calendar-check"></i> Book Atelier Consultation</h3>
+          <p>Schedule a 1-on-1 strategy & kinetic integration consultation with our specialists.</p>
+        </div>
+        <button id="closeConsultationBtn" class="modal-close">&times;</button>
+      </div>
+
+      <form id="consultationForm" class="consultation-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="consultName">Your Name *</label>
+            <input type="text" id="consultName" placeholder="e.g. Eleanor Vance" required class="form-input">
+          </div>
+          <div class="form-group">
+            <label for="consultEmail">Professional Email *</label>
+            <input type="email" id="consultEmail" placeholder="eleanor@studio.com" required class="form-input">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="consultService">Service / Solution of Interest *</label>
+            <select id="consultService" required class="form-input">
+              <option value="Essential Botanical Kit ($299)">Essential Botanical Kit ($299)</option>
+              <option value="Atelier Commercial License ($799)" selected>Atelier Commercial License ($799)</option>
+              <option value="Custom Atelier Engineering ($2,499+)">Custom Atelier Engineering ($2,499+)</option>
+              <option value="General Sales & Partnership Query">General Sales & Partnership Query</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="consultDate">Preferred Consultation Date *</label>
+            <input type="date" id="consultDate" required class="form-input">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="consultNotes">Project Overview & Requirements</label>
+          <textarea id="consultNotes" rows="3" placeholder="Tell us about your brand, domain, or specific technical requirements..." class="form-input"></textarea>
+        </div>
+
+        <div class="form-footer">
+          <div class="ethics-notice">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Ethical & Transparent Promise: No hidden fees, instant confirmation, full privacy guarantee.</span>
+          </div>
+          <button type="submit" class="action-btn glow-btn">
+            <span>Confirm Consultation Booking</span>
+            <i class="fa-solid fa-check"></i>
+          </button>
+        </div>
+        <div id="consultationStatus" class="form-status-msg"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 14. Floating AI Sales & Business Assistant Widget -->
+  <div id="assistantContainer" class="assistant-container">
+    
+    <!-- Floating Trigger Button -->
+    <button id="assistantToggleBtn" class="assistant-toggle-btn" aria-label="Open Sales & Business Assistant">
+      <div class="btn-avatar">
+        <i class="fa-solid fa-robot"></i>
+      </div>
+      <span class="btn-label">Sales Assistant</span>
+      <span class="online-pulse"></span>
+      <span id="unreadBadge" class="unread-badge">1</span>
+    </button>
+
+    <!-- Floating Chat Window -->
+    <div id="assistantWindow" class="assistant-window hidden">
+      <!-- Window Header -->
+      <div class="assistant-header">
+        <div class="assistant-profile">
+          <div class="profile-avatar">
+            <i class="fa-solid fa-headset"></i>
+            <span class="status-dot"></span>
+          </div>
+          <div class="profile-info">
+            <h4>Sales & Business Assistant</h4>
+            <p><i class="fa-solid fa-shield-check"></i> Ethical & Transparent Advisor</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button id="voiceToggleBtn" class="header-icon-btn" title="Toggle Speech Output">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+          <button id="closeAssistantBtn" class="header-icon-btn" title="Minimize Chat">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- System Prompt Mission Badge -->
+      <div class="assistant-mission-bar">
+        <i class="fa-solid fa-certificate"></i>
+        <span>Official Sales & Business Advisor • Transparent & Ethical Customer Support</span>
+      </div>
+
+      <!-- Message History Container -->
+      <div id="assistantMessages" class="assistant-messages">
+        <!-- Messages rendered dynamically by app.js -->
+      </div>
+
+      <!-- Typing Indicator -->
+      <div id="typingIndicator" class="typing-indicator hidden">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="typing-text">Assistant is formulating answer...</span>
+      </div>
+
+      <!-- Quick Suggestion Chips -->
+      <div class="suggestion-chips-bar">
+        <button class="chip-btn" data-query="Recommend the best solution for my site">💡 Best Solution</button>
+        <button class="chip-btn" data-query="Explain products, pricing, and licensing">🏷️ Products & Pricing</button>
+        <button class="chip-btn" data-query="How to book a consultation?">📅 Book Consultation</button>
+        <button class="chip-btn" data-query="Why choose Aura Bloom over normal video?">⚡ 60FPS Performance</button>
+      </div>
+
+      <!-- Input Bar -->
+      <form id="assistantForm" class="assistant-input-form">
+        <input type="text" id="assistantInput" placeholder="Ask about products, pricing, licensing, or consultation..." autocomplete="off">
+        <button type="submit" id="sendAssistantBtn" class="send-btn" title="Send Message">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

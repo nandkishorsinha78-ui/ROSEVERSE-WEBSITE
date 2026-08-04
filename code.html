@@ -1,0 +1,320 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Rosie | Premium Rose Boutique</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&amp;family=Libre+Caslon+Text:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f8efea",
+                        "tertiary-fixed-dim": "#cdc6b8",
+                        "on-surface-variant": "#5a403c",
+                        "on-tertiary-container": "#b5aea1",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#2f2c22",
+                        "surface-container": "#f5ece7",
+                        "on-secondary-container": "#546a2e",
+                        "tertiary-fixed": "#e9e2d3",
+                        "on-tertiary-fixed-variant": "#4b463c",
+                        "secondary": "#50652a",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#e3beb8",
+                        "surface-container-low": "#fbf2ed",
+                        "primary": "#610000",
+                        "inverse-primary": "#ffb4a8",
+                        "inverse-surface": "#34302c",
+                        "on-secondary-fixed-variant": "#394d14",
+                        "on-primary-fixed": "#410000",
+                        "primary-container": "#8b0000",
+                        "surface-bright": "#fff8f5",
+                        "on-secondary-fixed": "#131f00",
+                        "on-surface": "#1e1b18",
+                        "secondary-fixed": "#d2eca2",
+                        "tertiary-container": "#464238",
+                        "primary-fixed": "#ffdad4",
+                        "surface-dim": "#e1d8d4",
+                        "on-secondary": "#ffffff",
+                        "outline": "#8e706b",
+                        "on-background": "#1e1b18",
+                        "surface-container-high": "#efe6e2",
+                        "on-tertiary-fixed": "#1e1b13",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#920703",
+                        "surface-tint": "#b52619",
+                        "primary-fixed-dim": "#ffb4a8",
+                        "surface-container-highest": "#e9e1dc",
+                        "on-error-container": "#93000a",
+                        "background": "#fff8f5",
+                        "secondary-fixed-dim": "#b6d088",
+                        "surface": "#fff8f5",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#ff907f",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e9e1dc",
+                        "secondary-container": "#cfe99f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "section-gap": "120px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "container-max": "1280px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Libre Caslon Text"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Libre Caslon Text"],
+                        "headline-lg-mobile": ["Libre Caslon Text"],
+                        "display-lg": ["Libre Caslon Text"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-effect {
+            background: rgba(255, 248, 245, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .bento-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.125rem;
+            border: 1px solid rgba(142, 112, 107, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-item:hover {
+            border-color: rgba(97, 0, 0, 0.5);
+        }
+        .bento-item img {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-item:hover img {
+            transform: scale(1.05);
+        }
+        .custom-input {
+            border: none;
+            border-bottom: 1px solid rgba(142, 112, 107, 0.15);
+            background: transparent;
+            border-radius: 0;
+            transition: border-color 0.3s ease;
+        }
+        .custom-input:focus {
+            outline: none;
+            box-shadow: none;
+            border-bottom-color: #50652a;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation -->
+<nav class="bg-surface/80 backdrop-blur-md border-b border-outline-variant/15 w-full top-0 sticky z-50 transition-all ease-in-out duration-300">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<a class="font-display-lg text-headline-md text-primary tracking-tighter" href="#">Roseverse</a>
+<div class="hidden md:flex items-center gap-6">
+<a class="font-label-lg text-label-lg text-primary border-b border-primary pb-1 transition-colors duration-300" href="#">Collection</a>
+<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Masterclass</a>
+<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Boutique</a>
+<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">About</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-primary hover:text-primary-container transition-colors duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">shopping_bag</span>
+</button>
+<button class="text-primary hover:text-primary-container transition-colors duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 w-full h-full">
+<img alt="Stunning background image of a premium red rose" class="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmzfO605-lwlzdZlvHJyrq_sxvBa4jywjpR4o4caNY_f81fBB1Zkuxw42imDwBcpWY6RczyAT6sx5wXubky7-jj3wKqZ71FuYJnHTmOKjyYtWfYYxYbb8i5dBdjfbw3EfV6h4TGOr6o3FZBLyIHE1Y-NAC2u7lzJTbiRZODduifWf2zDddOyFAXbUW1uncoufaBYyIDXwI7TK8H27OVaQid7MwQbiYwflUn9yEsII6sAmZVJciCZF9TLDL-trE6rvp">
+<div class="absolute inset-0 bg-gradient-to-b from-tertiary/40 to-tertiary/10"></div>
+</div>
+<div class="relative z-10 text-center px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto glass-effect py-16 px-8 md:px-24 border border-outline-variant/20 shadow-[0_0_100px_rgba(97,0,0,0.15)]">
+<h1 class="font-display-lg text-display-lg text-primary mb-6">Cultivating Elegance</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-10">Discover the world's most exquisite roses, grown with passion and curated for your most precious moments.</p>
+<a class="inline-block bg-primary text-on-primary font-label-lg text-label-lg px-8 py-4 hover:bg-primary-container transition-colors duration-300" href="#collection">Explore Collection</a>
+</div>
+</header>
+<!-- Gallery (The Collection) -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" id="collection">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background mb-4">The Collection</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl mx-auto">A curated gallery of our finest varieties, selected for their extraordinary color, fragrance, and petal count.</p>
+</div>
+<div class="bento-grid">
+<div class="bento-item h-[400px]">
+<img alt="Detailed photograph of a vibrant red rose" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvq7KsE4NPQp29mBDUYtNBr-uvmEu-gxPM49LX_1zusIXDc4f4CCdkATiTtZCFO5O8fjYyqS3d7AO08ujfErYEv4QekkFBhpRKfs41rNvrS44A02-lL84yN4-4CfF-FrdG0yDDoNmcsCBVOpx1PQH3l3cZJxL93zWu-0Y1tSrN3DoMyinm0Zewm2B6F648GHmqcTGr9iNdnMPi_rrCVOrpVj6hxidJQy9wsrvGtpBAhTfnufcgMbZePRAF94_bCQyv">
+<div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-tertiary/90 to-transparent">
+<h3 class="font-headline-md text-headline-md text-on-primary mb-1">Crimson Velvet</h3>
+<span class="inline-block px-3 py-1 bg-secondary-container text-on-secondary-container font-label-sm text-label-sm rounded-full">Fragrant</span>
+</div>
+</div>
+<div class="bento-item h-[400px]">
+<img class="w-full h-full object-cover" data-alt="A close-up, high-fashion photograph of a delicate pale pink rose against a clean, minimalist white background. Soft, diffused lighting highlights the velvety texture of the petals. The image embodies a light-mode, premium editorial aesthetic with vast negative space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAO7IYm-mu_czkkZNvfTVWGqGiQ4i03n3B4N2JG2OgKs1kC2wfYbYxwpScpXif3CL2KrhXrIcYgspbb4GtWAXk1vjLhIfIJCTZXTSdJznxYwWRx2Q8TG1IKZSit6iQuBEj4Jm8-YGylEvPrJr5WjfjhUGArMPbZDDUPFPwy7fatz3sGyxlzgOKm56z83Yf_pbT_0k2t41p6yJGQB9PxDJsLGvuXb7JQ_eRZ6NNpTpPdPOuW3JdZ-fE">
+<div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-tertiary/90 to-transparent">
+<h3 class="font-headline-md text-headline-md text-on-primary mb-1">Blush Sonata</h3>
+<span class="inline-block px-3 py-1 bg-secondary-container text-on-secondary-container font-label-sm text-label-sm rounded-full">Seasonal</span>
+</div>
+</div>
+<div class="bento-item h-[400px] md:col-span-2">
+<img class="w-full h-full object-cover" data-alt="A wide, landscape photograph of an elegant floral arrangement featuring pristine white and deep red roses in a minimalist ceramic vase. Set in a bright, modern studio space with soft natural light streaming in from the side. High key lighting, editorial aesthetic, sophisticated mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJSxnetdSa3De_5nVwwgcxMcDpdq5UkgBtS-0Qo5t0VphMyzIxM-GAeZNCmaQuvPrkIITJKkpG6miCc0b1LUBEYgJbZRCNfQ1yIFOzQ3e4vZKbDeErRdjGScrrDZ03TEnhhx3w8zG0eKQOeUZ352uXEJWtp6nA8vVQhz8zHV0wcldaBf5f4NG1OPKJ9cBSWzFTBPslEsJWSzZRCoNKpXoox69ACbByBNcQeaKqrirO3qHURBvPnHM">
+<div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-tertiary/90 to-transparent">
+<h3 class="font-headline-md text-headline-md text-on-primary mb-1">The Atelier Arrangement</h3>
+<p class="font-body-md text-body-md text-inverse-on-surface/80">Curated perfection for grand spaces.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Masterclass Section -->
+<section class="bg-surface-container-low py-section-gap">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div class="order-2 md:order-1">
+<img class="w-full h-[500px] object-cover border border-outline-variant/20" data-alt="A detail shot of a pair of vintage, dark metal pruning shears resting beside fresh rose stems on a clean, light cream surface. Minimalist composition, soft natural lighting, emphasizing the tools of floral artistry. Premium, editorial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZc3Gnn5nPRaMefQrb4JoT_SQHoFb0pWXHX7kfP98Yj6DKynPdgEmR4Cc9J2VAp7Eq8W3flhK1CR3l-mj7FVSThTHHBpNpSItkABYIm4vIKlWp7Vt3rV_5Q8XZ-o7QKLmci78xSiJdYMg-YvkMo2Y8mVYP2JduXSZWl8voMDHbAnht7GN1Y2UazypAUTuXwCUuXzFzIZMqyWTB8h5xqtp6pyQEu-4C5Q7YmUoflTWZoUcyqGfeLmQ">
+</div>
+<div class="order-1 md:order-2">
+<span class="font-label-lg text-label-lg text-secondary tracking-widest uppercase mb-4 block">Masterclass</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background mb-6">The Art of the Bloom</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-6">Elevate your understanding of floral care. Learn the delicate techniques of pruning, hydration, and placement to ensure your roses maintain their breathtaking presence for days to come.</p>
+<ul class="space-y-4 mb-10">
+<li class="flex items-start gap-4 pb-4 border-b border-outline-variant/15">
+<span class="material-symbols-outlined text-primary mt-1" style="font-variation-settings: 'FILL' 0;">water_drop</span>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-background">Hydration Techniques</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">The secret to structural longevity.</p>
+</div>
+</li>
+<li class="flex items-start gap-4 pb-4 border-b border-outline-variant/15">
+<span class="material-symbols-outlined text-primary mt-1" style="font-variation-settings: 'FILL' 0;">cut</span>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-background">Precision Pruning</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Encouraging optimal bloom unfurling.</p>
+</div>
+</li>
+</ul>
+<a class="inline-flex items-center gap-2 font-label-lg text-label-lg text-primary hover:text-primary-container transition-colors duration-300 group" href="#">
+                    Join the Masterclass 
+                    <span class="material-symbols-outlined transform group-hover:translate-x-1 transition-transform" style="font-variation-settings: 'FILL' 0;">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Boutique Shop -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+<div>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background mb-4">The Boutique</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">Curated arrangements for delivery, designed with an uncompromising eye for proportion and color.</p>
+</div>
+<a class="font-label-lg text-label-lg text-primary border-b border-primary pb-1 hover:border-transparent transition-all duration-300" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Product Card 1 -->
+<div class="group cursor-pointer">
+<div class="relative overflow-hidden mb-6 border border-outline-variant/10 h-[450px] bg-surface-container-lowest">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A minimalist photograph of a single, perfect dark red rose in a slender glass vase. Set against a soft cream backdrop with delicate, diffused lighting. The aesthetic is clean, elegant, and high-end editorial." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChohpAeODPC1qPPeQyyjePzQSz4Rd7KFT-7rbT-Yj4dT3W0RUeT-pvRcTqPvGZfhAt6I-d5ACScTbwj3UnIzlQKRfrdYXSi07w6Ljq_qIw9CI2nD81h5j4m7Kv2qNx3RpO_4W2v14lvJZ6L5eUv6outaOemAHbPWmDcKHf0n_cZf_Jeu1sxyfvLc0q9LroPB-HYgGOCjFPeE4AR7Ti6igeTbYT0hD6YytrLspKQ6ZFIsaSbg9JEi0">
+<div class="absolute inset-0 bg-inverse-surface/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+<button class="bg-primary text-on-primary font-label-lg text-label-lg px-6 py-3 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Add to Cart</button>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-2">The Solitaire</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">Single stem Crimson Velvet</p>
+<p class="font-label-lg text-label-lg text-primary">$45</p>
+</div>
+<!-- Product Card 2 -->
+<div class="group cursor-pointer">
+<div class="relative overflow-hidden mb-6 border border-outline-variant/10 h-[450px] bg-surface-container-lowest">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A beautifully composed cluster of soft peach and white roses arranged elegantly. The composition is airy and bright, utilizing negative space. Lighting is high-key and soft, creating a luxurious, timeless mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7FaD3oVxLxedKzuNvVOYioFb1w_vDeDloRmWKZxSeR2_0NtFv_GdKH9h8x4sl4FZVd4QKMWEqPFTLmt5r2CAMIJ4iACMXt35hTquBwg56jIidLVDDq9OCFdflVf8E95owDGpGeRLhrIJo553o7N8WDRc6r1p3OlxNmZ9fMjWbmsPuggBWZyxY2bDtf8_90IbXHef6p8yxDGofb0wXxvX-tlDMI2kjkKY7g_xBnqNfSnA5PxIu6U0">
+<div class="absolute inset-0 bg-inverse-surface/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+<button class="bg-primary text-on-primary font-label-lg text-label-lg px-6 py-3 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Add to Cart</button>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-2">Morning Haze</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">Half-dozen Blush Sonata</p>
+<p class="font-label-lg text-label-lg text-primary">$120</p>
+</div>
+<!-- Product Card 3 -->
+<div class="group cursor-pointer">
+<div class="relative overflow-hidden mb-6 border border-outline-variant/10 h-[450px] bg-surface-container-lowest">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A grand, opulent bouquet of mixed deep red, burgundy, and dark pink roses. Photographed against a very light, minimalist background to emphasize the rich, dramatic colors of the flowers. High-end, sophisticated aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnHzu313ePW7xGSVe1jlzNhATnuHsQC7Vysnh7krS4SvVsZSsRc5e97usnJHEfgy0EHOA4_OyQgc27yS0kCa-5ngS3kWHV90q9auv9oIsrb3jzbee-ac-zV9FKJc-4EutOx0_7DPjnPSS823ITRoxglFF_b5yrfNBKniSUxUBfzRMlkLNzbWfPN6REvD-NtgHYvsqMnueeFbvvfiY61taAkmkvMGO30CfifX_8WOlUX4WLwahqIGQ">
+<div class="absolute inset-0 bg-inverse-surface/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+<button class="bg-primary text-on-primary font-label-lg text-label-lg px-6 py-3 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Add to Cart</button>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-2">Midnight Opera</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">Two dozen mixed heritage</p>
+<p class="font-label-lg text-label-lg text-primary">$285</p>
+</div>
+</div>
+</section>
+<!-- Newsletter -->
+<section class="bg-surface-bright py-section-gap border-t border-outline-variant/10">
+<div class="max-w-3xl mx-auto px-margin-mobile text-center">
+<span class="material-symbols-outlined text-primary text-4xl mb-6" style="font-variation-settings: 'FILL' 0;">local_florist</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background mb-4">Floral Inspirations</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-10">Subscribe to receive gentle notes on seasonal arrivals, exclusive masterclasses, and the art of living with flowers.</p>
+<form class="flex flex-col md:flex-row gap-4 max-w-lg mx-auto">
+<div class="relative flex-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant absolute -top-5 left-0" for="email">Email Address</label>
+<input class="custom-input w-full py-2 font-body-md text-on-background placeholder:text-outline-variant" id="email" placeholder="your@email.com" required="" type="email">
+</div>
+<button class="bg-primary text-on-primary font-label-lg text-label-lg px-8 py-2 hover:bg-primary-container transition-colors duration-300 self-end mt-4 md:mt-0" type="submit">Subscribe</button>
+</form>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container-highest py-section-gap border-t border-outline-variant/10">
+<div class="flex flex-col items-center gap-8 px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto text-center">
+<a class="font-display-lg text-headline-md text-primary" href="#">Roseverse</a>
+<div class="flex flex-wrap justify-center gap-6 md:gap-12">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#">Shipping &amp; Returns</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#">Contact Us</a>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-4">© 2024 Roseverse Atelier. Cultivating elegance through every petal.</p>
+</div>
+</footer>
+
+
+
+
+</body></html>

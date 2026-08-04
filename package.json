@@ -1,0 +1,22 @@
+{
+  "name": "roseverse-website",
+  "version": "1.0.0",
+  "description": "AURA BLOOM • 300-Frame Botanical Kinetic Atelier Website",
+  "main": "index.html",
+  "scripts": {
+    "start": "python server.py",
+    "dev": "python server.py",
+    "build": "echo 'Static build ready for Vercel deployment'"
+  },
+  "keywords": [
+    "canvas",
+    "3d",
+    "botanical",
+    "motion-graphics",
+    "60fps",
+    "atelier",
+    "roseverse"
+  ],
+  "author": "Nandkishor Sinha",
+  "license": "MIT"
+}
