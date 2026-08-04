@@ -28,7 +28,7 @@ export default function Navbar({
       }
 
       const scrollPos = window.scrollY + 120;
-      const sections = ['hero', 'about', 'kinetic-studio', 'collection', 'masterclass', 'boutique', 'process', 'products', 'faq'];
+      const sections = ['hero', 'about', 'kinetic-studio', 'sanctuary', 'collection', 'masterclass', 'boutique', 'process', 'products', 'faq'];
 
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
@@ -65,6 +65,7 @@ export default function Navbar({
     { label: 'Overview', href: '#hero' },
     { label: 'About', href: '#about' },
     { label: 'Kinetic Studio', href: '#kinetic-studio' },
+    { label: 'Sanctuary', href: '#sanctuary' },
     { label: 'Collection', href: '#collection' },
     { label: 'Masterclass', href: '#masterclass' },
     { label: 'Boutique', href: '#boutique' },

@@ -10,6 +10,7 @@ import Hero from '@/components/Hero';
 import HighlightsRibbon from '@/components/HighlightsRibbon';
 import AboutAtelier from '@/components/AboutAtelier';
 import KineticStudio from '@/components/KineticStudio';
+import DivineNatureSanctuary from '@/components/DivineNatureSanctuary';
 import CollectionGallery from '@/components/CollectionGallery';
 import Masterclass from '@/components/Masterclass';
 import BoutiqueStore from '@/components/BoutiqueStore';
@@ -72,34 +73,37 @@ export default function Home() {
         setIsPlayingVideo={setIsPlayingVideo}
       />
 
-      {/* 7. Collection Gallery */}
+      {/* 7. Divine Nature Sanctuary Section */}
+      <DivineNatureSanctuary />
+
+      {/* 8. Collection Gallery */}
       <CollectionGallery />
 
-      {/* 8. Care Masterclass */}
+      {/* 9. Care Masterclass */}
       <Masterclass onOpenConsultation={handleOpenConsultation} />
 
-      {/* 9. Boutique Store */}
+      {/* 10. Boutique Store */}
       <BoutiqueStore onOpenConsultation={handleOpenConsultation} />
 
-      {/* 10. Process Pipeline */}
+      {/* 11. Process Pipeline */}
       <ProcessPipeline />
 
-      {/* 11. Pricing & Licensing Tiers */}
+      {/* 12. Pricing & Licensing Tiers */}
       <PricingTiers onOpenConsultation={handleOpenConsultation} />
 
-      {/* 12. Specifications Grid */}
+      {/* 13. Specifications Grid */}
       <SpecificationsGrid />
 
-      {/* 13. FAQ Accordion */}
+      {/* 14. FAQ Accordion */}
       <FAQAccordion />
 
-      {/* 14. Newsletter CTA */}
+      {/* 15. Newsletter CTA */}
       <NewsletterCTA />
 
-      {/* 15. Footer */}
+      {/* 16. Footer */}
       <Footer />
 
-      {/* 16. AI Sales & Business Assistant Widget */}
+      {/* 17. AI Sales & Business Assistant Widget */}
       <SalesAssistantAI
         isOpen={isAssistantOpen}
         setIsOpen={setIsAssistantOpen}
@@ -107,14 +111,14 @@ export default function Home() {
         onOpenCatalog={() => setIsCatalogOpen(true)}
       />
 
-      {/* 17. Consultation Booking Modal */}
+      {/* 18. Consultation Booking Modal */}
       <ConsultationModal
         isOpen={isConsultationOpen}
         onClose={() => setIsConsultationOpen(false)}
         selectedTier={selectedTier}
       />
 
-      {/* 18. 300-Frame Catalog Lightbox Modal */}
+      {/* 19. 300-Frame Catalog Lightbox Modal */}
       <CatalogModal
         isOpen={isCatalogOpen}
         onClose={() => setIsCatalogOpen(false)}
