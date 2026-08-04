@@ -1216,6 +1216,21 @@ How can I best assist you right now?
 
   init3DTiltCards();
 
+  /* Cookie Consent Handler */
+  const cookieBanner = document.getElementById('cookieBanner');
+  const acceptCookieBtn = document.getElementById('acceptCookieBtn');
+
+  if (cookieBanner && acceptCookieBtn) {
+    if (localStorage.getItem('roseverse_cookie_consent') === 'accepted') {
+      cookieBanner.classList.add('hidden');
+    }
+    acceptCookieBtn.addEventListener('click', () => {
+      localStorage.setItem('roseverse_cookie_consent', 'accepted');
+      cookieBanner.classList.add('hidden');
+      showEyeToast('Cookie & Privacy Preferences Saved.');
+    });
+  }
+
   preloadImages();
 });
 

@@ -4,15 +4,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AURA BLOOM • 300-Frame Botanical Kinetic Atelier</title>
-  <meta name="description" content="A 2026 luxury digital atelier showcasing 300-frame HTML5 canvas motion, interactive video playback, and real-time frame controls.">
+  <!-- SEO & Social Open Graph Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://roseverse-website.vercel.app/">
+  <meta property="og:title" content="ROSEVERSE • 300-Frame Botanical Kinetic Atelier">
+  <meta property="og:description" content="A 2026 luxury digital atelier showcasing 300-frame HTML5 canvas motion, 60FPS step LERP interpolation, and spatial audio synthesis.">
+  <meta property="og:image" content="https://lh3.googleusercontent.com/aida-public/AB6AXuCvq7KsE4NPQp29mBDUYtNBr-uvmEu-gxPM49LX_1zusIXDc4f4CCdkATiTtZCFO5O8fjYyqS3d7AO08ujfErYEv4QekkFBhpRKfs41rNvrS44A02-lL84yN4-4CfF-FrdG0yDDoNmcsCBVOpx1PQH3l3cZJxL93zWu-0Y1tSrN3DoMyinm0Zewm2B6F648GHmqcTGr9iNdnMPi_rrCVOrpVj6hxidJQy9wsrvGtpBAhTfnufcgMbZePRAF94_bCQyv">
   
-  <!-- Modern Google Fonts & FontAwesome -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Libre+Caslon+Text:wght@400;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ROSEVERSE • 300-Frame Botanical Kinetic Atelier">
+  <meta name="twitter:description" content="A 2026 luxury digital atelier showcasing 300-frame HTML5 canvas motion, 60FPS step LERP interpolation, and spatial audio synthesis.">
+
+  <!-- SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%2350652a' d='M32 6c-8 0-14 6-14 14 0 5.2 3.1 9.7 7.6 11.9C20.2 34.2 16 40.5 16 48c0 8.8 7.2 16 16 16s16-7.2 16-16c0-7.5-4.2-13.8-9.6-16.1C42.9 29.7 46 25.2 46 20c0-8-6-14-14-14zm0 6c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm0 24c5.5 0 10 4.5 10 10s-4.5 10-10 10-10-4.5-10-10 4.5-10 10-10z'/></svg>">
+
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://roseverse-website.vercel.app/#organization",
+        "name": "ROSEVERSE Atelier",
+        "url": "https://roseverse-website.vercel.app/",
+        "sameAs": [
+          "https://github.com/nandkishorsinha78-ui/ROSEVERSE-WEBSITE"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://roseverse-website.vercel.app/#website",
+        "url": "https://roseverse-website.vercel.app/",
+        "name": "ROSEVERSE",
+        "publisher": { "@id": "https://roseverse-website.vercel.app/#organization" }
+      },
+      {
+        "@type": "Product",
+        "name": "300-Frame Botanical Kinetic Engine",
+        "description": "60FPS HTML5 Canvas motion sequence pre-cached in RAM for zero-latency frame scrubbing.",
+        "brand": { "@type": "Brand", "name": "ROSEVERSE" },
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "USD",
+          "lowPrice": "299",
+          "highPrice": "2499",
+          "offerCount": "3"
+        }
+      }
+    ]
+  }
+  </script>
   
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script id="tailwind-config">
@@ -665,10 +707,10 @@
     <div class="flex flex-col items-center gap-8 px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto text-center">
       <a class="font-display-lg text-headline-md text-primary" href="#hero">Roseverse</a>
       <div class="flex flex-wrap justify-center gap-6 md:gap-12">
-        <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#hero">Privacy Policy</a>
-        <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#hero">Terms of Service</a>
-        <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#hero">Shipping & Returns</a>
-        <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#hero">Contact Us</a>
+        <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="privacy.html">Privacy Policy</a>
+        <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="terms.html">Terms of Service</a>
+        <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#products">Licensing & Shipping</a>
+        <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all ease-in-out duration-300" href="#consultationForm">Contact Us</a>
       </div>
       <p class="font-body-md text-body-md text-on-surface-variant mt-4">© 2026 Roseverse Atelier. Cultivating elegance through every petal.</p>
     </div>
@@ -1076,6 +1118,18 @@
       </form>
     </div>
 
+  <!-- Cookie Consent Banner -->
+  <div id="cookieBanner" class="cookie-consent-banner">
+    <div class="cookie-inner">
+      <div class="cookie-text">
+        <i class="fa-solid fa-cookie-bite"></i>
+        <span>ROSEVERSE uses privacy-first local storage for Eye Comfort settings and canvas state. Zero third-party tracking cookies.</span>
+      </div>
+      <div class="cookie-actions">
+        <a href="privacy.html" class="cookie-link">Privacy Policy</a>
+        <button id="acceptCookieBtn" class="cookie-accept-btn">Accept Preferences</button>
+      </div>
+    </div>
   </div>
 
   <script src="app.js"></script>

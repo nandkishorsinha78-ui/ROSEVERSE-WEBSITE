@@ -1,0 +1,6 @@
+# Robots.txt for ROSEVERSE Botanical Atelier
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://roseverse-website.vercel.app/sitemap.xml
