@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import {
   Play,
   Pause,
@@ -8,9 +8,8 @@ import {
   SkipForward,
   Volume2,
   VolumeX,
-  Maximize2,
-  Minimize2,
   Expand,
+  Keyboard,
 } from 'lucide-react';
 
 interface KineticStudioProps {
@@ -24,7 +23,6 @@ export default function KineticStudio({
 }: KineticStudioProps) {
   const TOTAL_FRAMES = 300;
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const particleCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const [images, setImages] = useState<HTMLImageElement[]>([]);
@@ -181,7 +179,7 @@ export default function KineticStudio({
   }, [images, isPlayingVideo, playbackSpeed, fitMode, currentFrame]);
 
   // Audio Toggle Engine
-  const toggleAudio = () => {
+  const toggleAudio = useCallback(() => {
     if (!audioCtxRef.current) {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       audioCtxRef.current = new AudioCtx();
@@ -214,7 +212,37 @@ export default function KineticStudio({
       }
       return next;
     });
-  };
+  }, []);
+
+  // Keyboard Hotkeys (Space, Left/Right, M, F)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (target?.closest('input, select, textarea, button')) return;
+
+      if (e.code === 'Space') {
+        e.preventDefault();
+        setIsPlayingVideo((prev) => !prev);
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        setIsPlayingVideo(false);
+        setCurrentFrame((prev) => Math.max(1, prev - 1));
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        setIsPlayingVideo(false);
+        setCurrentFrame((prev) => Math.min(TOTAL_FRAMES, prev + 1));
+      } else if (e.code === 'KeyM') {
+        e.preventDefault();
+        toggleAudio();
+      } else if (e.code === 'KeyF') {
+        e.preventDefault();
+        setFitMode((prev) => (prev === 'contain' ? 'cover' : 'contain'));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [setIsPlayingVideo, toggleAudio]);
 
   const roundedFrame = Math.round(currentFrame);
   const progressFraction = (roundedFrame - 1) / (TOTAL_FRAMES - 1);
@@ -222,6 +250,11 @@ export default function KineticStudio({
 
   return (
     <section id="kinetic-studio" ref={containerRef} className="relative h-[300vh] bg-obsidian">
+      {/* Screen Reader Live Region */}
+      <div className="sr-only" aria-live="polite">
+        Frame {roundedFrame} of 300. {isPlayingVideo ? 'Playing animation' : 'Paused'}.
+      </div>
+
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
         {/* Render Canvas */}
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-center" />
@@ -313,8 +346,9 @@ export default function KineticStudio({
           <div className="flex items-center gap-2">
             <button
               onClick={() => setIsPlayingVideo((prev) => !prev)}
-              className="w-10 h-10 rounded-full bg-crimson-rose text-white flex items-center justify-center hover:scale-105 transition-transform"
-              title="Play / Pause Motion"
+              className="w-10 h-10 rounded-full bg-crimson-rose text-white flex items-center justify-center hover:scale-105 transition-transform focus:ring-2 focus:ring-gold-accent"
+              aria-label={isPlayingVideo ? 'Pause motion animation' : 'Play motion animation'}
+              title="Play / Pause Motion (Space)"
             >
               {isPlayingVideo ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
             </button>
@@ -324,8 +358,9 @@ export default function KineticStudio({
                 setIsPlayingVideo(false);
                 setCurrentFrame((prev) => Math.max(1, prev - 1));
               }}
-              className="w-9 h-9 rounded-full bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center hover:text-white"
-              title="Previous Frame"
+              className="w-9 h-9 rounded-full bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center hover:text-white focus:ring-2 focus:ring-gold-accent"
+              aria-label="Previous frame"
+              title="Previous Frame (Left Arrow)"
             >
               <SkipBack className="w-4 h-4" />
             </button>
@@ -335,20 +370,22 @@ export default function KineticStudio({
                 setIsPlayingVideo(false);
                 setCurrentFrame((prev) => Math.min(TOTAL_FRAMES, prev + 1));
               }}
-              className="w-9 h-9 rounded-full bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center hover:text-white"
-              title="Next Frame"
+              className="w-9 h-9 rounded-full bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center hover:text-white focus:ring-2 focus:ring-gold-accent"
+              aria-label="Next frame"
+              title="Next Frame (Right Arrow)"
             >
               <SkipForward className="w-4 h-4" />
             </button>
 
             <button
               onClick={toggleAudio}
-              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${
+              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all focus:ring-2 focus:ring-gold-accent ${
                 !isMuted
                   ? 'bg-gold-accent text-obsidian border-gold-accent'
                   : 'bg-white/5 border-white/10 text-slate-300 hover:text-white'
               }`}
-              title="Toggle Sound Synth"
+              aria-label={!isMuted ? 'Mute audio synthesizer' : 'Unmute audio synthesizer'}
+              title="Toggle Sound Synth (M)"
             >
               {!isMuted ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
             </button>
@@ -370,7 +407,8 @@ export default function KineticStudio({
                 setIsPlayingVideo(false);
                 setCurrentFrame(parseInt(e.target.value, 10));
               }}
-              className="w-full h-1.5 bg-white/15 rounded-lg appearance-none cursor-pointer accent-crimson-rose"
+              aria-label="Frame timeline scrubber"
+              className="w-full h-1.5 bg-white/15 rounded-lg appearance-none cursor-pointer accent-crimson-rose focus:ring-2 focus:ring-gold-accent"
             />
           </div>
 
@@ -379,7 +417,8 @@ export default function KineticStudio({
             <select
               value={playbackSpeed}
               onChange={(e) => setPlaybackSpeed(parseFloat(e.target.value))}
-              className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-slate-300 focus:outline-none"
+              aria-label="Playback speed"
+              className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-slate-300 focus:outline-none focus:ring-2 focus:ring-gold-accent"
             >
               <option value="0.5" className="bg-obsidian">0.5x</option>
               <option value="1.0" className="bg-obsidian">1.0x</option>
@@ -390,7 +429,8 @@ export default function KineticStudio({
             <select
               value={filterClass}
               onChange={(e) => setFilterClass(e.target.value)}
-              className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-slate-300 focus:outline-none"
+              aria-label="Color grading filter preset"
+              className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-slate-300 focus:outline-none focus:ring-2 focus:ring-gold-accent"
             >
               <option value="none" className="bg-obsidian">Original</option>
               <option value="glow" className="bg-obsidian">Velvet Glow</option>
@@ -401,11 +441,17 @@ export default function KineticStudio({
 
             <button
               onClick={() => setFitMode(fitMode === 'contain' ? 'cover' : 'contain')}
-              className="w-9 h-9 rounded-full bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center hover:text-white"
-              title="Toggle Cover/Contain"
+              className="w-9 h-9 rounded-full bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center hover:text-white focus:ring-2 focus:ring-gold-accent"
+              aria-label="Toggle Cover or Contain fit mode"
+              title="Toggle Cover/Contain (F)"
             >
               <Expand className="w-4 h-4" />
             </button>
+
+            <div className="hidden lg:flex items-center gap-1 text-[10px] text-slate-400 border-l border-white/10 pl-2">
+              <Keyboard className="w-3.5 h-3.5 text-gold-accent" />
+              <span>[Space] [←/→] [M] [F]</span>
+            </div>
           </div>
         </div>
       </div>

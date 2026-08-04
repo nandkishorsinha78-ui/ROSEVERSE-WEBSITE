@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Preloader from '@/components/Preloader';
 import CustomCursor from '@/components/CustomCursor';
+import ScrollProgress from '@/components/ScrollProgress';
 import ThreeCanvas from '@/components/ThreeCanvas';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -40,10 +41,11 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-obsidian relative selection:bg-crimson-rose selection:text-white">
-      {/* 0. Preloader & Cursor */}
+    <main id="main-content" className="min-h-screen bg-obsidian relative selection:bg-crimson-rose selection:text-white">
+      {/* 0. Preloader, Cursor, & Scroll Progress */}
       <Preloader />
       <CustomCursor />
+      <ScrollProgress />
 
       {/* 1. Hardware Accelerated Three.js 3D Background */}
       <ThreeCanvas />
