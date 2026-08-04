@@ -62,7 +62,7 @@ const jsonLd = {
       name: '300-Frame Botanical Kinetic Engine',
       description: '60FPS HTML5 Canvas motion sequence pre-cached in RAM for zero-latency frame scrubbing.',
       brand: { '@type': 'Brand', name: 'ROSEVERSE' },
-      offers': {
+      offers: {
         '@type': 'AggregateOffer',
         priceCurrency: 'USD',
         lowPrice: '299',
