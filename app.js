@@ -256,29 +256,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     GSAP & LENIS SMOOTH SCROLL ENGINE
+     NORMALIZED NATIVE BROWSER SCROLL & GSAP ENGINE
      ========================================================================== */
   function initGsapAndLenis() {
-    if (window.Lenis) {
-      const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-        touchMultiplier: 1.5
-      });
-
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
-
-      if (window.gsap && window.ScrollTrigger) {
-        gsap.registerPlugin(ScrollTrigger);
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => lenis.raf(time * 1000));
-        gsap.ticker.lagSmoothing(0);
-      }
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
     }
 
     if (window.gsap && window.ScrollTrigger) {
@@ -617,9 +599,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } else {
         const diff = targetFrame - currentFrame;
-        if (Math.abs(diff) > 0.01) {
-          const stepSize = Math.sign(diff) * Math.min(Math.abs(diff), 0.35 * (Math.abs(diff) > 8 ? 3 : 1));
-          currentFrame += stepSize;
+        if (Math.abs(diff) > 0.005) {
+          currentFrame += diff * 0.45;
         } else {
           currentFrame = targetFrame;
         }
