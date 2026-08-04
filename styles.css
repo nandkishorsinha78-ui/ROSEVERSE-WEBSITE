@@ -2636,6 +2636,43 @@ body.cursor-hover .cursor-follower {
   }
 }
 
+/* Studio Scroll Animation Heading Overlay (Fades out at 30% scroll) */
+.studio-heading-overlay {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+  will-change: opacity, transform;
+  transition: opacity 0.08s linear, transform 0.08s linear;
+}
+
+.studio-heading-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.8rem, 7.5vw, 5.5rem);
+  font-weight: 900;
+  letter-spacing: 12px;
+  background: linear-gradient(135deg, #ffffff 0%, var(--gold-accent) 60%, var(--crimson-rose) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.8));
+  margin-bottom: 0.5rem;
+}
+
+.studio-heading-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(0.8rem, 1.8vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  opacity: 0.9;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+}
+
+
 
 
 

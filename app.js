@@ -284,10 +284,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.gsap && window.ScrollTrigger) {
       gsap.registerPlugin(ScrollTrigger);
 
-      gsap.from('#hero .hero-tag', { opacity: 0, y: 30, duration: 1.0, ease: 'power3.out', delay: 0.4 });
-      gsap.from('#hero .hero-heading', { opacity: 0, y: 45, duration: 1.2, ease: 'power4.out', delay: 0.6 });
+      // Hero Text Animation: Fade in at start, fade out slowly as user scrolls 30% of the section
+      gsap.from('#hero .hero-tag', { opacity: 0, y: 30, duration: 1.0, ease: 'power3.out', delay: 0.3 });
+      gsap.from('#hero .hero-heading', { opacity: 0, y: 45, duration: 1.2, ease: 'power4.out', delay: 0.5 });
       gsap.from('#hero .hero-subheading, #hero .hero-actions, #hero .hero-scroll-cue', {
-        opacity: 0, y: 30, duration: 1.0, stagger: 0.18, ease: 'power3.out', delay: 0.8
+        opacity: 0, y: 30, duration: 1.0, stagger: 0.18, ease: 'power3.out', delay: 0.7
+      });
+
+      // Scroll Fade-Out over first 30% of hero section
+      gsap.to('#hero .hero-inner', {
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: '30% top',
+          scrub: true
+        },
+        opacity: 0,
+        y: -40,
+        ease: 'none'
       });
 
       gsap.from('.highlight-item-card', {
