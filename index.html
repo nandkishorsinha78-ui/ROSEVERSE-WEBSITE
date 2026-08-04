@@ -3,20 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AURA BLOOM • 300-Frame Botanical Kinetic Atelier</title>
+  <title>ROSEVERSE • 300-Frame Botanical Kinetic Atelier</title>
+  <meta name="description" content="A 2026 luxury digital atelier showcasing 300-frame HTML5 canvas motion, 60FPS step LERP interpolation, 3D Three.js WebGL kinetics, and spatial audio synthesis.">
+  <link rel="canonical" href="https://roseverse-website.vercel.app/">
+  
   <!-- SEO & Social Open Graph Metadata -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://roseverse-website.vercel.app/">
   <meta property="og:title" content="ROSEVERSE • 300-Frame Botanical Kinetic Atelier">
-  <meta property="og:description" content="A 2026 luxury digital atelier showcasing 300-frame HTML5 canvas motion, 60FPS step LERP interpolation, and spatial audio synthesis.">
+  <meta property="og:description" content="A 2026 luxury digital atelier showcasing 300-frame HTML5 canvas motion, 60FPS step LERP interpolation, 3D Three.js WebGL kinetics, and spatial audio synthesis.">
   <meta property="og:image" content="https://lh3.googleusercontent.com/aida-public/AB6AXuCvq7KsE4NPQp29mBDUYtNBr-uvmEu-gxPM49LX_1zusIXDc4f4CCdkATiTtZCFO5O8fjYyqS3d7AO08ujfErYEv4QekkFBhpRKfs41rNvrS44A02-lL84yN4-4CfF-FrdG0yDDoNmcsCBVOpx1PQH3l3cZJxL93zWu-0Y1tSrN3DoMyinm0Zewm2B6F648GHmqcTGr9iNdnMPi_rrCVOrpVj6hxidJQy9wsrvGtpBAhTfnufcgMbZePRAF94_bCQyv">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ROSEVERSE • 300-Frame Botanical Kinetic Atelier">
-  <meta name="twitter:description" content="A 2026 luxury digital atelier showcasing 300-frame HTML5 canvas motion, 60FPS step LERP interpolation, and spatial audio synthesis.">
+  <meta name="twitter:description" content="A 2026 luxury digital atelier showcasing 300-frame HTML5 canvas motion, 60FPS step LERP interpolation, 3D Three.js WebGL kinetics, and spatial audio synthesis.">
 
   <!-- SVG Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%2350652a' d='M32 6c-8 0-14 6-14 14 0 5.2 3.1 9.7 7.6 11.9C20.2 34.2 16 40.5 16 48c0 8.8 7.2 16 16 16s16-7.2 16-16c0-7.5-4.2-13.8-9.6-16.1C42.9 29.7 46 25.2 46 20c0-8-6-14-14-14zm0 6c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm0 24c5.5 0 10 4.5 10 10s-4.5 10-10 10-10-4.5-10-10 4.5-10 10-10z'/></svg>">
+
+  <!-- Resource Preconnects -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+  <!-- Font Awesome & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;700&family=Hanken+Grotesk:wght@400;500;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Three.js, GSAP & Lenis Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
 
   <!-- Schema.org JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -194,6 +212,13 @@
 </head>
 <body>
 
+  <!-- 0. Three.js Hardware-Accelerated 3D WebGL Background Surface -->
+  <canvas id="threeCanvas" class="three-render-surface"></canvas>
+
+  <!-- Custom Luxury Magnetic Cursor -->
+  <div id="customCursor" class="custom-cursor"></div>
+  <div id="cursorFollower" class="cursor-follower"></div>
+
   <!-- 1. Interactive Preloader Overlay -->
   <div id="preloader" class="preloader">
     <div class="preloader-backdrop"></div>
@@ -233,7 +258,8 @@
         <i class="fa-solid fa-bars"></i>
       </button>
 
-      <nav id="navMenu" class="nav-menu">
+      <nav id="navMenu" class="nav-menu" aria-label="Main Navigation">
+        <div id="navActiveIndicator" class="nav-active-indicator"></div>
         <a href="#hero" class="nav-item active">Overview</a>
         <a href="#about" class="nav-item">About</a>
         <a href="#kinetic-studio" class="nav-item">Kinetic Studio</a>

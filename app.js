@@ -77,6 +77,296 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   /* ==========================================================================
+     0. THREE.JS 3D WEBGL ENGINE & ATMOSPHERIC LIGHTING
+     ========================================================================== */
+  let threeScene, threeCamera, threeRenderer;
+  let rosePetalsGroup, embersGroup;
+  let threeMouseX = 0, threeMouseY = 0;
+  let targetThreeMouseX = 0, targetThreeMouseY = 0;
+
+  function initThreeJSEngine() {
+    const canvas = document.getElementById('threeCanvas');
+    if (!canvas || !window.THREE) return;
+
+    try {
+      threeScene = new THREE.Scene();
+      threeScene.fog = new THREE.FogExp2(0x030305, 0.006);
+
+      const aspect = window.innerWidth / window.innerHeight;
+      threeCamera = new THREE.PerspectiveCamera(55, aspect, 0.1, 1000);
+      threeCamera.position.set(0, 0, 18);
+
+      threeRenderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: 'high-performance'
+      });
+      threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      threeRenderer.setSize(window.innerWidth, window.innerHeight);
+      threeRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+      threeRenderer.toneMappingExposure = 1.25;
+
+      const ambientLight = new THREE.AmbientLight(0x1a0d1a, 1.6);
+      threeScene.add(ambientLight);
+
+      const dirLightGold = new THREE.DirectionalLight(0xf4d38c, 2.8);
+      dirLightGold.position.set(8, 12, 10);
+      threeScene.add(dirLightGold);
+
+      const pointLightCrimson = new THREE.PointLight(0xff1a40, 5.5, 45);
+      pointLightCrimson.position.set(-6, 2, 8);
+      threeScene.add(pointLightCrimson);
+
+      const pointLightEmerald = new THREE.PointLight(0x00e5a3, 2.5, 35);
+      pointLightEmerald.position.set(8, -5, 5);
+      threeScene.add(pointLightEmerald);
+
+      // 3D Rose Petals
+      rosePetalsGroup = new THREE.Group();
+      const petalCount = 42;
+
+      for (let i = 0; i < petalCount; i++) {
+        const geom = new THREE.SphereGeometry(
+          0.4 + Math.random() * 0.5,
+          16, 16,
+          0, Math.PI * 0.8,
+          0, Math.PI * 0.5
+        );
+        
+        const isGold = Math.random() > 0.75;
+        const mat = new THREE.MeshPhysicalMaterial({
+          color: isGold ? 0xf4d38c : (Math.random() > 0.4 ? 0xaa0022 : 0xff1a40),
+          roughness: 0.25,
+          metalness: isGold ? 0.85 : 0.15,
+          transmission: isGold ? 0.1 : 0.45,
+          thickness: 0.8,
+          clearcoat: 0.9,
+          clearcoatRoughness: 0.1,
+          side: THREE.DoubleSide
+        });
+
+        const mesh = new THREE.Mesh(geom, mat);
+        mesh.position.set(
+          (Math.random() - 0.5) * 30,
+          (Math.random() - 0.5) * 24,
+          (Math.random() - 0.5) * 20
+        );
+        mesh.rotation.set(
+          Math.random() * Math.PI,
+          Math.random() * Math.PI,
+          Math.random() * Math.PI
+        );
+
+        mesh.userData = {
+          rotSpeedX: (Math.random() - 0.5) * 0.007,
+          rotSpeedY: (Math.random() - 0.5) * 0.007,
+          rotSpeedZ: (Math.random() - 0.5) * 0.007,
+          floatOffsetY: Math.random() * Math.PI * 2,
+          floatSpeed: 0.005 + Math.random() * 0.01
+        };
+
+        rosePetalsGroup.add(mesh);
+      }
+      threeScene.add(rosePetalsGroup);
+
+      // Z-Space Floating Particles (Embers)
+      embersGroup = new THREE.Group();
+      const emberGeom = new THREE.BufferGeometry();
+      const emberCount = 180;
+      const positions = new Float32Array(emberCount * 3);
+      const colors = new Float32Array(emberCount * 3);
+
+      const goldColor = new THREE.Color(0xf4d38c);
+      const crimsonColor = new THREE.Color(0xff1a40);
+
+      for (let i = 0; i < emberCount; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 38;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 38;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 28;
+
+        const mixColor = Math.random() > 0.5 ? goldColor : crimsonColor;
+        colors[i * 3] = mixColor.r;
+        colors[i * 3 + 1] = mixColor.g;
+        colors[i * 3 + 2] = mixColor.b;
+      }
+
+      emberGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      emberGeom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+      const emberMat = new THREE.PointsMaterial({
+        size: 0.25,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.85,
+        blending: THREE.AdditiveBlending
+      });
+
+      const embers = new THREE.Points(emberGeom, emberMat);
+      embersGroup.add(embers);
+      threeScene.add(embersGroup);
+
+      let clock = new THREE.Clock();
+
+      function renderThree() {
+        requestAnimationFrame(renderThree);
+
+        const elapsedTime = clock.getElapsedTime();
+
+        threeMouseX += (targetThreeMouseX - threeMouseX) * 0.04;
+        threeMouseY += (targetThreeMouseY - threeMouseY) * 0.04;
+
+        threeCamera.position.x = threeMouseX * 1.5;
+        threeCamera.position.y = -threeMouseY * 1.5;
+        threeCamera.lookAt(0, 0, 0);
+
+        if (rosePetalsGroup) {
+          rosePetalsGroup.children.forEach(petal => {
+            petal.rotation.x += petal.userData.rotSpeedX;
+            petal.rotation.y += petal.userData.rotSpeedY;
+            petal.rotation.z += petal.userData.rotSpeedZ;
+            petal.position.y += Math.sin(elapsedTime * 0.8 + petal.userData.floatOffsetY) * 0.003;
+          });
+        }
+
+        if (embersGroup) {
+          embersGroup.rotation.y = elapsedTime * 0.03;
+          embersGroup.rotation.x = Math.sin(elapsedTime * 0.02) * 0.05;
+        }
+
+        threeRenderer.render(threeScene, threeCamera);
+      }
+      renderThree();
+
+      window.addEventListener('mousemove', (e) => {
+        targetThreeMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        targetThreeMouseY = (e.clientY / window.innerHeight) * 2 - 1;
+      });
+
+      window.addEventListener('resize', () => {
+        if (!threeCamera || !threeRenderer) return;
+        threeCamera.aspect = window.innerWidth / window.innerHeight;
+        threeCamera.updateProjectionMatrix();
+        threeRenderer.setSize(window.innerWidth, window.innerHeight);
+        threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      });
+    } catch (err) {
+      console.warn('Three.js WebGL initialization fallback:', err);
+    }
+  }
+
+  /* ==========================================================================
+     GSAP & LENIS SMOOTH SCROLL ENGINE
+     ========================================================================== */
+  function initGsapAndLenis() {
+    if (window.Lenis) {
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        touchMultiplier: 1.5
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+      }
+    }
+
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.from('#hero .hero-tag', { opacity: 0, y: 30, duration: 1.0, ease: 'power3.out', delay: 0.4 });
+      gsap.from('#hero .hero-heading', { opacity: 0, y: 45, duration: 1.2, ease: 'power4.out', delay: 0.6 });
+      gsap.from('#hero .hero-subheading, #hero .hero-actions, #hero .hero-scroll-cue', {
+        opacity: 0, y: 30, duration: 1.0, stagger: 0.18, ease: 'power3.out', delay: 0.8
+      });
+
+      gsap.from('.highlight-item-card', {
+        scrollTrigger: { trigger: '#highlights', start: 'top 85%' },
+        opacity: 0, y: 35, stagger: 0.15, duration: 0.8, ease: 'power2.out'
+      });
+
+      gsap.utils.toArray('.section-title-box, .about-content').forEach(box => {
+        gsap.from(box, {
+          scrollTrigger: { trigger: box, start: 'top 85%' },
+          opacity: 0, y: 40, duration: 1.0, ease: 'power3.out'
+        });
+      });
+
+      gsap.from('.bento-item', {
+        scrollTrigger: { trigger: '#collection', start: 'top 80%' },
+        opacity: 0, y: 40, stagger: 0.18, duration: 0.9, ease: 'power3.out'
+      });
+
+      gsap.from('.pricing-card', {
+        scrollTrigger: { trigger: '#products', start: 'top 80%' },
+        opacity: 0, y: 50, stagger: 0.2, duration: 1.0, ease: 'power3.out'
+      });
+
+      gsap.from('.process-card', {
+        scrollTrigger: { trigger: '#process', start: 'top 80%' },
+        opacity: 0, y: 40, stagger: 0.15, duration: 0.9, ease: 'power3.out'
+      });
+
+      gsap.from('.spec-card', {
+        scrollTrigger: { trigger: '#specs', start: 'top 80%' },
+        opacity: 0, y: 35, stagger: 0.15, duration: 0.8, ease: 'power2.out'
+      });
+    }
+  }
+
+  /* ==========================================================================
+     CUSTOM LUXURY MAGNETIC CURSOR ENGINE
+     ========================================================================== */
+  function initCustomCursorEngine() {
+    const cursor = document.getElementById('customCursor');
+    const follower = document.getElementById('cursorFollower');
+    if (!cursor || !follower) return;
+
+    let cx = 0, cy = 0;
+    let fx = 0, fy = 0;
+    let mx = -100, my = -100;
+
+    window.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+    });
+
+    function updateCursor() {
+      cx += (mx - cx) * 0.65;
+      cy += (my - cy) * 0.65;
+      fx += (mx - fx) * 0.18;
+      fy += (my - fy) * 0.18;
+
+      cursor.style.left = `${cx}px`;
+      cursor.style.top = `${cy}px`;
+      follower.style.left = `${fx}px`;
+      follower.style.top = `${fy}px`;
+
+      requestAnimationFrame(updateCursor);
+    }
+    requestAnimationFrame(updateCursor);
+
+    const interactiveSelectors = 'a, button, input, select, textarea, .milestone-card, .pricing-card, .spec-card, .bento-item, .studio-slider, .highlight-item-card, .faq-question';
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest(interactiveSelectors)) {
+        document.body.classList.add('cursor-hover');
+      } else {
+        document.body.classList.remove('cursor-hover');
+      }
+    });
+  }
+
+  /* ==========================================================================
      1. Preloading All 300 High-Definition Frames
      ========================================================================== */
   function preloadImages() {
@@ -121,6 +411,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (preloader) preloader.classList.add('hidden');
       setupCanvas();
       initParticleSystem();
+      initThreeJSEngine();
+      initGsapAndLenis();
+      initCustomCursorEngine();
       buildCatalogModal();
       startAtelierEngine();
     }, 400);
@@ -1070,6 +1363,21 @@ How can I best assist you right now?
       });
     }
 
+    function updateNavbarIndicator() {
+      const activeItem = document.querySelector('a.nav-item.active');
+      const indicator = document.getElementById('navActiveIndicator');
+      const navMenu = document.getElementById('navMenu');
+
+      if (!activeItem || !indicator || !navMenu) return;
+
+      const linkRect = activeItem.getBoundingClientRect();
+      const navRect = navMenu.getBoundingClientRect();
+
+      indicator.style.left = `${linkRect.left - navRect.left}px`;
+      indicator.style.width = `${linkRect.width}px`;
+      indicator.style.opacity = '1';
+    }
+
     // 4. ScrollSpy Active Menu Item Highlighter
     function updateActiveMenuOnScroll() {
       const scrollPos = window.scrollY + 120;
@@ -1092,8 +1400,12 @@ How can I best assist you right now?
             item.classList.remove('active');
           }
         });
+        updateNavbarIndicator();
       }
     }
+
+    window.addEventListener('resize', updateNavbarIndicator, { passive: true });
+    setTimeout(updateNavbarIndicator, 300);
   }
 
   initNavbarScrollEngine();

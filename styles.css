@@ -2535,5 +2535,107 @@ body.comfort-eye-mode .msg-bubble {
   box-shadow: 0 0 25px rgba(182, 208, 136, 0.6);
 }
 
+/* ==========================================================================
+   Three.js 3D WebGL Surface & Custom Luxury Magnetic Cursor
+   ========================================================================== */
+.three-render-surface {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.85;
+}
+
+/* Custom Magnetic Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  background: var(--crimson-rose);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 14px var(--crimson-glow);
+}
+
+.cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(244, 211, 140, 0.45);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 0 15px rgba(244, 211, 140, 0.15);
+}
+
+body.cursor-hover .custom-cursor {
+  width: 18px;
+  height: 18px;
+  background: var(--gold-accent);
+  box-shadow: 0 0 22px var(--gold-glow);
+}
+
+body.cursor-hover .cursor-follower {
+  width: 56px;
+  height: 56px;
+  border-color: var(--crimson-rose);
+  background: rgba(255, 26, 64, 0.08);
+}
+
+/* Sliding Navbar Active Link Indicator */
+.nav-menu {
+  position: relative;
+}
+
+.nav-active-indicator {
+  position: absolute;
+  bottom: 0px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--crimson-rose), var(--gold-accent));
+  box-shadow: 0 0 12px var(--crimson-glow);
+  border-radius: 2px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* GSAP Scroll Reveal & Stagger Utilities */
+.gsap-reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  will-change: opacity, transform;
+}
+
+/* Accessibility Focus States */
+*:focus-visible {
+  outline: 2px solid var(--gold-accent) !important;
+  outline-offset: 4px !important;
+}
+
+/* Reduced Motion Fallback */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .custom-cursor, .cursor-follower {
+    display: none !important;
+  }
+}
+
+
 
 
