@@ -1,6 +1,4 @@
 {
-  "version": 2,
-  "name": "roseverse-website",
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
@@ -10,10 +8,6 @@
         {
           "key": "Access-Control-Allow-Origin",
           "value": "*"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
         }
       ]
     },
