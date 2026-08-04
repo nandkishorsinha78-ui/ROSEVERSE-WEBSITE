@@ -2,12 +2,11 @@
   "name": "roseverse-website",
   "version": "1.0.0",
   "description": "AURA BLOOM • 300-Frame Botanical Kinetic Atelier Website",
-  "main": "index.html",
+  "private": true,
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "serve:py": "python server.py",
-    "build": "echo 'Static build ready for Vercel deployment'"
+    "serve:py": "python server.py"
   },
   "keywords": [
     "canvas",
