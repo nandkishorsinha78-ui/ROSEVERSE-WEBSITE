@@ -11,6 +11,7 @@ import HighlightsRibbon from '@/components/HighlightsRibbon';
 import AboutAtelier from '@/components/AboutAtelier';
 import KineticStudio from '@/components/KineticStudio';
 import DivineNatureSanctuary from '@/components/DivineNatureSanctuary';
+import FeaturedBloomSection from '@/components/FeaturedBloomSection';
 import CollectionGallery from '@/components/CollectionGallery';
 import Masterclass from '@/components/Masterclass';
 import BoutiqueStore from '@/components/BoutiqueStore';
@@ -75,6 +76,9 @@ export default function Home() {
 
       {/* 7. Divine Nature Sanctuary Section */}
       <DivineNatureSanctuary />
+
+      {/* 7.5 Featured Pink Rose Bloom Spotlight Section */}
+      <FeaturedBloomSection onOpenConsultation={handleOpenConsultation} />
 
       {/* 8. Collection Gallery */}
       <CollectionGallery />
