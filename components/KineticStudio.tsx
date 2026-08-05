@@ -48,7 +48,7 @@ export default function KineticStudio({
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
       const frameNumStr = String(i).padStart(3, '0');
-      img.src = `frames/ezgif-frame-${frameNumStr}.jpg`;
+      img.src = `/frames/ezgif-frame-${frameNumStr}.jpg`;
 
       img.onload = () => {
         count++;

@@ -16,7 +16,7 @@ export default function NotFound() {
         </p>
         <Link
           href="/"
-          className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-gradient-to-r from-secondary to-secondary-container text-white font-semibold shadow-lg shadow-secondary/30 hover:scale-105 transition-all duration-300"
+          className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-gradient-to-r from-crimson-rose to-crimson-dark text-white font-semibold shadow-lg shadow-crimson-rose/30 hover:scale-105 transition-all duration-300"
         >
           Return to Roseverse Atelier
         </Link>
