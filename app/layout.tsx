@@ -1,6 +1,56 @@
 import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/next';
+import {
+  Cinzel_Decorative,
+  Cinzel,
+  Hanken_Grotesk,
+  Libre_Caslon_Text,
+  Outfit,
+  Plus_Jakarta_Sans,
+} from 'next/font/google';
 import './globals.css';
+
+const cinzelDecorative = Cinzel_Decorative({
+  subsets: ['latin'],
+  weight: ['700', '900'],
+  variable: '--font-cinzel-decorative',
+  display: 'swap',
+});
+
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  weight: ['500', '700'],
+  variable: '--font-cinzel',
+  display: 'swap',
+});
+
+const hankenGrotesk = Hanken_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-hanken-grotesk',
+  display: 'swap',
+});
+
+const libreCaslonText = Libre_Caslon_Text({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-libre-caslon',
+  display: 'swap',
+});
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-body',
+  display: 'swap',
+});
 
 export const viewport: Viewport = {
   themeColor: '#030305',
@@ -115,14 +165,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html
+      lang="en"
+      className={`dark ${cinzelDecorative.variable} ${cinzel.variable} ${hankenGrotesk.variable} ${libreCaslonText.variable} ${outfit.variable} ${plusJakartaSans.variable}`}
+    >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;700&family=Hanken+Grotesk:wght@400;500;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
