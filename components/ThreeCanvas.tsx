@@ -16,6 +16,10 @@ export default function ThreeCanvas() {
     let renderer: THREE.WebGLRenderer;
     let rosePetalsGroup: THREE.Group;
     let embersGroup: THREE.Group;
+    let emberGeom: THREE.BufferGeometry;
+    let emberMat: THREE.PointsMaterial;
+    let handleMouseMove: (e: MouseEvent) => void;
+    let handleResize: () => void;
 
     let mouseX = 0;
     let mouseY = 0;
@@ -108,7 +112,7 @@ export default function ThreeCanvas() {
 
       // Z-Space Floating Particles
       embersGroup = new THREE.Group();
-      const emberGeom = new THREE.BufferGeometry();
+      emberGeom = new THREE.BufferGeometry();
       const emberCount = 180;
       const positions = new Float32Array(emberCount * 3);
       const colors = new Float32Array(emberCount * 3);
@@ -130,7 +134,7 @@ export default function ThreeCanvas() {
       emberGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       emberGeom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-      const emberMat = new THREE.PointsMaterial({
+      emberMat = new THREE.PointsMaterial({
         size: 0.25,
         vertexColors: true,
         transparent: true,
@@ -144,12 +148,12 @@ export default function ThreeCanvas() {
 
       const clock = new THREE.Clock();
 
-      const handleMouseMove = (e: MouseEvent) => {
+      handleMouseMove = (e: MouseEvent) => {
         targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
         targetMouseY = (e.clientY / window.innerHeight) * 2 - 1;
       };
 
-      const handleResize = () => {
+      handleResize = () => {
         if (!camera || !renderer) return;
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
@@ -190,30 +194,30 @@ export default function ThreeCanvas() {
       };
 
       render();
-
-      return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('resize', handleResize);
-        cancelAnimationFrame(animFrameId);
-
-        // Memory Cleanup
-        rosePetalsGroup?.children.forEach((child) => {
-          const mesh = child as THREE.Mesh;
-          mesh.geometry?.dispose();
-          if (Array.isArray(mesh.material)) {
-            mesh.material.forEach((m) => m.dispose());
-          } else {
-            mesh.material?.dispose();
-          }
-        });
-
-        emberGeom.dispose();
-        emberMat.dispose();
-        renderer.dispose();
-      };
     } catch (e) {
       console.warn('Three.js setup fallback:', e);
     }
+
+    return () => {
+      if (handleMouseMove) window.removeEventListener('mousemove', handleMouseMove);
+      if (handleResize) window.removeEventListener('resize', handleResize);
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+
+      // Memory Cleanup
+      rosePetalsGroup?.children.forEach((child) => {
+        const mesh = child as THREE.Mesh;
+        mesh.geometry?.dispose();
+        if (Array.isArray(mesh.material)) {
+          mesh.material.forEach((m) => m.dispose());
+        } else {
+          mesh.material?.dispose();
+        }
+      });
+
+      emberGeom?.dispose();
+      emberMat?.dispose();
+      renderer?.dispose();
+    };
   }, []);
 
   return <canvas ref={canvasRef} className="three-render-surface" />;

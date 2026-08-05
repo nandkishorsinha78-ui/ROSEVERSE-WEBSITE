@@ -49,6 +49,8 @@ export default function FAQAccordion() {
             >
               <button
                 onClick={() => setOpenIdx(isOpen ? null : idx)}
+                aria-expanded={isOpen}
+                aria-controls={`faq-answer-${idx}`}
                 className="w-full p-6 text-left flex items-center justify-between gap-4 font-display font-semibold text-white text-base md:text-lg hover:text-gold-accent transition-colors"
               >
                 <span>{faq.q}</span>
@@ -59,7 +61,12 @@ export default function FAQAccordion() {
                 />
               </button>
               {isOpen && (
-                <div className="px-6 pb-6 font-body text-slate-300 text-sm leading-relaxed border-t border-white/5 pt-4">
+                <div
+                  id={`faq-answer-${idx}`}
+                  role="region"
+                  aria-labelledby={`faq-question-${idx}`}
+                  className="px-6 pb-6 font-body text-slate-300 text-sm leading-relaxed border-t border-white/5 pt-4"
+                >
                   {faq.a}
                 </div>
               )}

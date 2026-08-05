@@ -19,14 +19,15 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
-  // Normalize URL
+  // Normalize URL and resolve safe path
   let safePath = req.url.split('?')[0];
   if (safePath === '/') safePath = '/index.html';
 
-  const filePath = path.join(__dirname, safePath);
+  const rootDir = path.resolve(__dirname);
+  const filePath = path.resolve(rootDir, '.' + safePath);
 
   // Security check: ensure within root dir
-  if (!filePath.startsWith(__dirname)) {
+  if (!filePath.startsWith(rootDir)) {
     res.writeHead(403, { 'Content-Type': 'text/plain' });
     res.end('Forbidden');
     return;

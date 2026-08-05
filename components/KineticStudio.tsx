@@ -27,6 +27,7 @@ export default function KineticStudio({
 
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [loadedCount, setLoadedCount] = useState(0);
+  const currentFrameRef = useRef(1);
   const [currentFrame, setCurrentFrame] = useState(1);
   const [playbackSpeed, setPlaybackSpeed] = useState(1.0);
   const [fitMode, setFitMode] = useState<'contain' | 'cover'>('contain');
@@ -71,10 +72,26 @@ export default function KineticStudio({
     if (!ctx) return;
 
     let animFrameId: number;
-    let targetFrame = currentFrame;
+    let targetFrame = currentFrameRef.current;
     let lastFrameTime = performance.now();
     let frameCount = 0;
     let lastFpsCheck = performance.now();
+    let lastRenderedFrame = -1;
+
+    const resizeCanvas = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        lastRenderedFrame = -1; // Force redraw on resize
+      }
+    };
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas, { passive: true });
 
     const handleScroll = () => {
       const container = containerRef.current;
@@ -107,66 +124,61 @@ export default function KineticStudio({
         const frameInterval = 1000 / (30 * playbackSpeed);
         if (timestamp - lastFrameTime >= frameInterval) {
           lastFrameTime = timestamp;
-          setCurrentFrame((prev) => {
-            const next = prev + 1 > TOTAL_FRAMES ? 1 : prev + 1;
-            return next;
-          });
+          currentFrameRef.current = currentFrameRef.current + 1 > TOTAL_FRAMES ? 1 : currentFrameRef.current + 1;
         }
       } else {
-        setCurrentFrame((prev) => {
-          const diff = targetFrame - prev;
-          if (Math.abs(diff) > 0.005) {
-            return prev + diff * 0.45;
-          }
-          return targetFrame;
-        });
+        const diff = targetFrame - currentFrameRef.current;
+        if (Math.abs(diff) > 0.005) {
+          currentFrameRef.current = currentFrameRef.current + diff * 0.45;
+        } else {
+          currentFrameRef.current = targetFrame;
+        }
       }
 
-      // Draw Canvas Frame
-      const frameIdx = Math.max(1, Math.min(TOTAL_FRAMES, Math.round(currentFrame))) - 1;
-      const img = images[frameIdx];
+      const frameIdx = Math.max(1, Math.min(TOTAL_FRAMES, Math.round(currentFrameRef.current))) - 1;
 
-      if (img && img.complete && img.naturalWidth !== 0) {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        const width = window.innerWidth;
-        const height = window.innerHeight;
+      if (frameIdx !== lastRenderedFrame) {
+        lastRenderedFrame = frameIdx;
+        setCurrentFrame(frameIdx + 1);
 
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const img = images[frameIdx];
+        if (img && img.complete && img.naturalWidth !== 0) {
+          const width = window.innerWidth;
+          const height = window.innerHeight;
 
-        ctx.clearRect(0, 0, width, height);
+          ctx.clearRect(0, 0, width, height);
 
-        const imgRatio = img.naturalWidth / img.naturalHeight;
-        const canvasRatio = width / height;
+          const imgRatio = img.naturalWidth / img.naturalHeight;
+          const canvasRatio = width / height;
 
-        let drawWidth: number;
-        let drawHeight: number;
+          let drawWidth: number;
+          let drawHeight: number;
 
-        if (fitMode === 'cover') {
-          if (canvasRatio > imgRatio) {
-            drawWidth = width;
-            drawHeight = width / imgRatio;
+          if (fitMode === 'cover') {
+            if (canvasRatio > imgRatio) {
+              drawWidth = width;
+              drawHeight = width / imgRatio;
+            } else {
+              drawHeight = height;
+              drawWidth = height * imgRatio;
+            }
           } else {
-            drawHeight = height;
-            drawWidth = height * imgRatio;
+            if (canvasRatio < imgRatio) {
+              drawWidth = width;
+              drawHeight = width / imgRatio;
+            } else {
+              drawHeight = height;
+              drawWidth = height * imgRatio;
+            }
           }
-        } else {
-          if (canvasRatio < imgRatio) {
-            drawWidth = width;
-            drawHeight = width / imgRatio;
-          } else {
-            drawHeight = height;
-            drawWidth = height * imgRatio;
-          }
+
+          const offsetX = (width - drawWidth) / 2;
+          const offsetY = (height - drawHeight) / 2;
+
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
         }
-
-        const offsetX = (width - drawWidth) / 2;
-        const offsetY = (height - drawHeight) / 2;
-
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-        ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
       }
     };
 
@@ -174,9 +186,10 @@ export default function KineticStudio({
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(animFrameId);
     };
-  }, [images, isPlayingVideo, playbackSpeed, fitMode, currentFrame]);
+  }, [images, isPlayingVideo, playbackSpeed, fitMode]);
 
   // Audio Toggle Engine
   const toggleAudio = useCallback(() => {
